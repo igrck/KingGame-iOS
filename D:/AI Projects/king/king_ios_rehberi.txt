@@ -1,0 +1,338 @@
+King Kart Oyunu — iOS Geliştirici Rehberi
+52 Kartlık Standart Deste · Kozlu · SwiftUI / Swift
+Başlangıç kuralı: Karo 2 sahibi oyunu açar · Kazanan bir sonraki eli açar
+Versiyon 1.1  ·  Kapsamlı Geliştirici Referansı
+İçindekiler
+0. Belge hakkında
+1. Oyun kuralları ve mekaniğin tanımlanması
+1.1 Oyuncu ve deste yapısı
+1.2 Koz sistemi
+1.3 Başlangıç kuralı: karo 2 ve açılış
+1.4 El açma ve sıra kuralları
+1.5 King kontratları
+1.6 El kazanma ve puan hesaplama
+2. Proje mimarisi ve kurulum
+3. Veri modellerinin tasarımı
+4. Oyun motorunun geliştirilmesi
+5. SwiftUI arayüz geliştirme
+6. Çok oyuncu desteği
+7. Veri saklama ve durum yönetimi
+8. Test stratejisi
+9. App Store ve yayın hazırlığı
+10. Geliştirici kontrol listesi
+0. Belge hakkında
+Bu belge, iOS platformunda 52 kartlık standart destesiyle oynanan, koz içeren King kart oyununu sıfırdan geliştirmek isteyen bir iOS geliştiricisi için adım adım, fazlara bölünmüş bir yol haritası sunar. Her aşama; mimari kararları, oyun kurallarını, teknik tuzakları ve test stratejilerini kapsar. Belge, projenin tüm sürecinde canlı referans olarak kullanılmak üzere hazırlanmıştır.
+
+1. Oyun kuralları ve mekaniğin tanımlanması
+Geliştirmeye başlamadan önce tüm kuralların netleştirilmesi kritiktir. Aşağıdaki maddeler uygulamaya kodlanmadan önce ekip içinde mutabık kalınmalıdır. Bu bölümdeki her kural doğrudan bir GameEngine fonksiyonuna veya GameState alanına karşılık gelir.
+
+1.1 Oyuncu ve deste yapısı
+Oyuncu sayısı: 4 kişi (standart); isteğe bağlı 3 kişi desteği sonradan eklenebilir.
+52 kartlık standart deste kullanılır; joker yoktur.
+Her oyuncuya 13 kart dağıtılır (4 × 13 = 52).
+Her el (round) 13 el (trick) üzerinden oynanır.
+Dağıtım sırası saat yönünün tersine döner; dağıtıcı her kontratta bir sonraki oyuncuya geçer.
+Dağıtım sırası — kodlama notu
+Dağıtıcıyı Player.isDealer: Bool ile işaretleyin. Her kontrat başında dealerIndex = (dealerIndex + 1) % 4 ile ilerleyin. Dağıtım sırasını GameState içinde saklayın; bu sayede oyun kaydedildiğinde sıra korunur.
+
+1.2 Koz sistemi
+Bu oyun versiyonunda koz (trump) aktiftir. Koz; renk takip etme zorunluluğu olmadığında veya elindeki renk bittiğinde kart oynamaya yarar ve eldeki en yüksek koz her zaman diğer renkleri yener.
+
+Koz belirleme
+Koz rengi her kontrat başında belirlenir. Önerilen yöntemler:
+Sabit koz: Belirli kontrat için koz rengi önceden tanımlıdır (ör. kalp kozludur).
+Dağıtıcı seçer: Dağıtıcı oyuncu koz rengini açıklar.
+Açık kart kozu: Destenin en üst kartı açılır; o kartın rengi koz olur.
+Seçilen yöntemi ContractConfig.trumpDetermination: TrumpMode ile yapılandırılabilir hale getirin.
+Koz rengi GameState.trumpSuit: Suit? alanında tutulur. Kozsuz kontrat için nil atanır.
+Koz oynama kuralları (sırayla uygulanır)
+Oyuncu elinde açılan rengi (lead suit) taşıyorsa, o renkten oynamak zorundadır — koz atamaz.
+Oyuncu elinde lead suit yoksa, koz oynayabilir veya başka herhangi bir kart oynayabilir.
+Eli kazanmak için; en az bir koz oynanmışsa en yüksek koz kazanır. Koz oynanmamışsa lead suit içindeki en yüksek kart kazanır.
+Koz da lead suit de olmayan kartlar hiçbir zaman el kazanamaz.
+Koz sıralaması rank.rawValue üzerinden yapılır; Koz 2 ≠ sıradan 2. Farklı renkteki aynı rank kozlu karşısında kaybeder. Bu kural TrickEvaluator'da ayrı bir dal olarak kodlanmalıdır.
+TrickEvaluator — koz destekli algoritma
+currentTrick içinde koz rengi var mı? → Evet: koz kartları arasından en yüksek rank kazanır.
+Koz yok → Lead suit kartları arasından en yüksek rank kazanır.
+Hiç lead suit oynamamış (tüm oyuncular farklı renk oynamış) → Lead oyuncusunun kartı kazanır.
+1.3 Başlangıç kuralı: karo 2 ve açılış
+Oyunun ilk eli özel bir kuralla başlar: Elinde karo 2 (♦2) olan oyuncu birinci eli açmak zorundadır. Bu kural sadece oyunun ilk eli için geçerlidir.
+
+Adım adım uygulama
+Dağıtım tamamlandıktan sonra GameEngine.findOpeningPlayer() çağrılır.
+Bu fonksiyon 4 oyuncunun hand dizisini tarar; Card(suit: .diamonds, rank: .two) kime aitse o oyuncu currentPlayerIndex olarak atanır.
+Bu oyuncu eline gelen karo 2'yi oynamak zorunda değildir — sadece eli açmak (lead etmek) zorundadır. İstediği kartı oynayabilir.
+Karo 2'nin ilk lead olarak oynanması zorunlu değildir; sadece açılış oyuncusunu belirler.
+GameState.openingRuleApplied: Bool bayrağı tutun; bu kural sonraki eller için devre dışı kalır.
+Karo 2'yi elinde tutan oyuncuyu başlangıçta UI'da belirgin biçimde gösterin (ör. avatar yanında küçük bir "♦2" rozeti). Kullanıcı deneyimini doğrudan etkiler.
+1.4 El açma ve sıra kuralları
+Temel sıra kuralı
+Bir eli açan (lead eden) oyuncudan sonraki oyuncu bir sonraki eli açar. Bu kural, geleneksel "eli kazanan açar" kuralından farklıdır. nextLeadPlayerIndex = (currentLeadPlayerIndex + 1) % 4 şeklinde hesaplanır.
+
+Sıra mantığı — kodlama detayı
+GameState.currentLeadPlayerIndex: Int — o elin açıcısını tutar.
+GameState.currentPlayerIndex: Int — şu an oynaması gereken oyuncuyu tutar.
+El bittikten sonra: nextLead = (currentLeadPlayerIndex + 1) % 4
+Yeni el başlamadan önce kazanma bilgisi (wonTricks) güncellenir, ardından lead değişir.
+Oynama sırası lead oyuncudan saat yönünde devam eder: (leadIndex + offset) % 4
+El içi oynama sırası
+Lead oyuncu kartını oynar.
+(leadIndex + 1) % 4 oynama sırası gelir.
+(leadIndex + 2) % 4 oynama sırası gelir.
+(leadIndex + 3) % 4 oynama sırası gelir.
+4 kart oynanınca el tamamlanır; kazanan belirlenir; bir sonraki lead hesaplanır.
+El kazananı ≠ bir sonraki lead oyuncu. Kazanan puan tablosuna işlenir; lead sıradaki oyuncuya geçer. Bu iki kavramı ayrı değişkenlerde tutun; karıştırmak en yaygın mantık hatasına yol açar.
+1.5 King kontratları
+King oyunu birden fazla kontrat içerir. Her kontrat ayrı puanlanır ve aynı koz/sıra kuralları geçerlidir.
+
+Kontrat	Hedef	Ceza	Koz aktif?
+El alma	Hiç el almamak	-50 / el	Evet
+Kız alma	Kız (Q) almamak	-100 / kız	Evet
+Kral alma	Kral (K) almamak	-150 / kral	Evet
+Erkek alma	Erkek (J) almamak	-75 / erkek	Evet
+Kupa alma	Kupa (♥) almamak	-50 / kupa kartı	Evet
+Kupa kral alma	♥K almamak	-200	Evet
+Son iki el	Son 2 eli almamak	-250	Evet
+King	Tüm cezalar aktif	Tüm cezalar birleşir	Evet
+Kontrat sırası ve sayısı yerel varyasyonlara göre değişebilir. Hangi varyantı destekleyeceğinizi baştan belirleyin ve kontrat listesini ContractConfig JSON/plist dosyasına çekin; kodda hardcode etmeyin.
+1.6 El kazanma ve puan hesaplama
+Her el bittikten sonra kazanan oyuncunun wonTricks dizisine o elin kartları eklenir.
+Kontrat bitince ScoreCalculator.calculateScore(for:contract:) çağrılır.
+Hesaplama: wonTricks içindeki kartlar kontrattaki ceza kriterlerine göre sayılır.
+"Batma" senaryosu: Bir oyuncu tüm elleri almışsa ceza yerine belirlenen bonus uygulanabilir (opsiyonel, konfigüre edilebilir).
+King kontratında tüm ceza hesaplamaları aynı anda çalışır ve toplanır.
+2. Proje mimarisi ve kurulum
+Aşama 1
+2.1 Mimari seçimi
+Önerilen mimari: MVVM + Combine veya MVVM + SwiftUI @Observable. Oyun motoru katmanını UI katmanından ayırmak test edilebilirlik açısından zorunludur.
+
+Katman	Sorumluluk	Örnek sınıflar
+Model	Kart, deste, oyuncu veri yapıları	Card, Deck, Player, GameState
+Game engine	Oyun mantığı, kural motoru	GameEngine, TrickEvaluator, ScoreCalculator
+ViewModel	UI state yönetimi	GameViewModel, LobbyViewModel
+View (SwiftUI)	Görsel bileşenler	CardView, HandView, GameBoardView
+Network	Çok oyuncu iletişimi	GameSession, MultipeerManager
+2.2 Proje klasör yapısı
+KingGame/
+Models/ → Card.swift, Deck.swift, Player.swift, GameState.swift
+Engine/ → GameEngine.swift, TrickEvaluator.swift, ContractManager.swift, ScoreCalculator.swift
+ViewModels/ → GameViewModel.swift, LobbyViewModel.swift
+Views/ → GameBoardView.swift, CardView.swift, HandView.swift, ScoreView.swift
+Network/ → GameSession.swift, MultipeerManager.swift, MessageEncoder.swift
+Resources/ → Assets.xcassets, Sounds/, Localizable.strings, ContractConfig.json
+Tests/ → EngineTests/, NetworkTests/
+2.3 Swift Package bağımlılıkları
+Paket	Amaç	Kaynak
+swift-collections	OrderedDictionary, Deque	apple/swift-collections
+Lottie-ios	Kart animasyonları	airbnb/lottie-ios
+SwiftySound	Ses efektleri	swiftsounders/SwiftySound
+GameKit (native)	Çok oyuncu, liderlik tablosu	Apple Framework
+3. Veri modellerinin tasarımı
+Aşama 2
+3.1 Card struct
+suit: Suit → enum Suit: String, CaseIterable { case hearts, diamonds, clubs, spades }
+rank: Rank → enum Rank: Int, CaseIterable { case two = 2, three, ..., ace = 14 }
+isVisible: Bool → açık/kapalı durumu (arka yüz renderı için)
+Hashable ve Identifiable protokolleri uygulanmalı (SwiftUI List ve ForEach için)
+Koz kontrolü için Card.isTrump(trumpSuit:) → Bool computed property ekleyin.
+3.2 Deck struct
+52 kart: Suit × Rank kombinasyonu ile programatik oluşturulur; hardcode edilmez.
+shuffle(): Fisher-Yates algoritması (Array.shuffle() built-in garantilidir).
+deal(to:count:): Her oyuncuya kart dağıtan fonksiyon.
+Her yeni el başında newDeck() çağrılır ve deste sıfırlanır.
+3.3 Player struct
+id: UUID (Identifiable)
+name: String
+hand: [Card] — eldeki kartlar
+wonTricks: [[Card]] — kazandığı eller (puan hesabı için)
+score: Int — genel toplam
+isHuman: Bool — AI / insan ayrımı
+isDealer: Bool — dağıtıcı sırasını takip etmek için
+3.4 GameState
+currentContract: ContractType
+trumpSuit: Suit? — aktif koz rengi; kozsuz kontrat için nil
+currentTrick: [UUID: Card] — oyuncuID → kart
+leadSuit: Suit? — açılan renk
+currentLeadPlayerIndex: Int — elin açıcısı
+currentPlayerIndex: Int — şu an oynayan oyuncu
+openingRuleApplied: Bool — karo 2 başlangıç kuralı uygulandı mı?
+roundScores: [UUID: Int] — tur bazlı puanlar
+phase: GamePhase → enum: .dealing, .playing, .scoring, .gameOver
+GameState'i Codable yapın. Bu sayede oyunu kaydetmek, ağ üzerinden senkronize etmek ve test fixture'ları oluşturmak kolaylaşır.
+4. Oyun motorunun geliştirilmesi
+Aşama 3
+4.1 GameEngine görevleri
+Dağıtım: startNewRound() — Deck oluştur, karıştır, dağıt, karo 2'yi bul, lead oyuncuyu ata.
+Koz belirleme: determineTrump() — Yapılandırılan TrumpMode'a göre koz rengini ata.
+Kart oynama: playCard(player:card:) — geçerlilik kontrolü, GameState güncelle.
+Geçerlilik: isValidPlay(card:by:) — follow-suit kuralını ve koz kuralını uygular.
+El kazananı: evaluateTrick() — TrickEvaluator'ı çağırır, wonTricks'i günceller.
+Sıra güncelleme: advanceLead() — nextLead = (currentLeadPlayerIndex + 1) % 4
+Puan hesaplama: calculateScores(for:) — kontrattaki ceza kriterlerine göre puan uygular.
+Kontrat geçişi: nextContract() — sıradaki kontrata geçer, yeni el dağıtır.
+Oyun sonu: checkGameOver() — tüm kontratlar bitince sonuçları hesaplar.
+4.2 TrickEvaluator — kozlu versiyon
+Girdi: currentTrick ([UUID: Card]), leadSuit: Suit, trumpSuit: Suit?
+Çıktı: Kazanan oyuncunun UUID'si
+Algoritma (sırasıyla):
+Trick içinde koz kartı var mı? → En yüksek kozun sahibi kazanır.
+Koz yoksa → Lead suit içindeki en yüksek kartın sahibi kazanır.
+Ne koz ne lead suit → Lead oyuncunun kartı kazanır.
+4.3 isValidPlay — kozlu geçerlilik kontrolü
+Oyuncunun elinde lead suit var mı? → Varsa lead suit oynamak zorunda; koz atamaZ.
+Lead suit yoksa → Herhangi kart (koz dahil) oynanabilir.
+Koz oynamak isteğe bağlıdır; zorunlu değildir (kural varyantına göre konfigüre edin).
+4.4 ContractManager
+Tüm kontratları sıralı bir array olarak tutar.
+Her kontrattaki koz belirleme modunu (TrumpMode) ayrı ayrı yapılandırır.
+Her kontrattaki puan ağırlıklarını (penaltyWeights) yapılandırılabilir JSON'dan okur.
+İsteğe bağlı kontrat seçimi için delegasyon desteği sunar.
+4.5 Yapay zeka (AI oyuncu)
+Basit AI: Geçerli kartlar arasından rastgele seçim. Geliştirmenin ilk aşamasında yeterlidir.
+Orta AI: Follow-suit ve koz kurallarını uygular; cezalı kartlardan kaçınmaya çalışır.
+Gelişmiş AI: Oynanan kozları sayar; kalan kozları tahmin ederek strateji geliştirir.
+AI'yı asla UI thread'inde çalıştırmayın. Task { await } veya DispatchQueue.global() kullanın. AI "düşünme" animasyonu için en az 0.5s gecikme ekleyin; aksi hâlde insan benzeri deneyim sağlanamaz.
+5. SwiftUI arayüz geliştirme
+Aşama 4
+5.1 Ekran yapısı
+Ekran	İçerik
+LaunchScreen	Logo, yükleme animasyonu
+MainMenuView	Oyuna başla, ayarlar, liderlik tablosu
+LobbyView	Oyuncu isimleri, AI/insan seçimi, koz modu seçimi, başlat
+GameBoardView	Ana oyun tahtası
+HandView	Kullanıcının elindeki kartlar (alt şerit)
+OpponentHandView	Rakip elleri (kapalı, 3 yön)
+TrickAreaView	Masanın ortasındaki oynanan kartlar + koz göstergesi
+TrumpIndicatorView	Aktif kozu gösteren sabit gösterge (ör. sağ üst köşe)
+ScoreView	Anlık puan paneli / overlay
+ContractSummaryView	Kontrat bitişi özeti
+GameOverView	Sonuç ekranı, kazanan, tekrar oyna
+SettingsView	Ses, titreşim, dil, tema, koz modu
+5.2 GameBoardView düzeni
+Alt (güney): Kullanıcının eli — fan şeklinde, dokunulabilir kartlar.
+Üst (kuzey): Karşı rakip — kapalı kartlar.
+Sol / Sağ: Yan rakipler — 90° döndürülmüş, kapalı.
+Merkez: TrickAreaView — 4 oynanan kart, her biri kendi köşesinde.
+Sağ üst: TrumpIndicatorView — koz rengini ve sembolünü kalıcı olarak gösterir.
+Sol üst: Puan mini göstergesi — dokunarak açılır puan paneli.
+Karo 2 rozeti: İlk elde, karo 2 sahibi oyuncunun avatarı üzerinde "♦2" rozeti gösterilir.
+5.3 CardView — kart tasarımı
+Standart kart boyutu: 63 × 88 pt (poker kartı oranı 2.5:3.5).
+Koz kartı için görsel ayrım: koz rengindeki kartlara ince altın border veya arka plan tonu ekleyin.
+SF Symbols veya özel SVG/PNG asset; semboller vektörel olmalı.
+Renk körlüğü desteği: ♥ ♦ için yalnızca kırmızıya güvenmeyin; şekil/desen de kullanın.
+isVisible kontrolü: kapalı kart için arka yüz; flip için rotation3DEffect.
+Seçilebilir kart: overlay highlight border + hafif scale(1.08) animasyonu.
+Geçersiz kart: opacity(0.4) ile soluk göster; dokunmayı engelle.
+5.4 Animasyonlar
+Kart dağıtımı: Her kart için sıralı withAnimation(.easeOut(duration:0.25)) delay ile deste konumundan hedef konuma kayma.
+Koz açıklaması: Koz rengi belirlendikten sonra koz sembolü ekranın ortasında büyüyüp küçülerek belirir.
+Kart oynama: Oyuncunun elinden merkeze sürükle-bırak veya dokunarak fırlat.
+El kazanma: Kazanan kartlar pakette toplanır — matchedGeometryEffect önerilir.
+Koz atma: Koz kartı oynanınca kısa parıltı animasyonu (subtle glow).
+Puan animasyonu: Negatif puan kırmızı, pozitif yeşil renkle sayısal counter animasyonu.
+5.5 Haptics ve ses
+Kart dokunuşu: UIImpactFeedbackGenerator(.light)
+Koz atma: UIImpactFeedbackGenerator(.medium) + özel ses efekti
+El kazanma: UINotificationFeedbackGenerator(.success)
+Ceza kartı yakalanma: UINotificationFeedbackGenerator(.error)
+Ses dosyaları: .caf formatı; AVAudioSession.Category.ambient
+Sessiz mod kontrolü: AVAudioSession.isOtherAudioPlaying ile uyum sağlayın.
+6. Çok oyuncu desteği
+Aşama 5
+6.1 MultipeerConnectivity (yerel ağ / Bluetooth)
+Aynı Wi-Fi veya Bluetooth üzerinden 4 cihaz.
+Avantajlar: Sunucu gerektirmez, düşük gecikme, offline çalışır.
+Dezavantajlar: Uzaktan oyun yok, iOS → iOS zorunlu.
+MCSession, MCNearbyServiceAdvertiser, MCNearbyServiceBrowser kullanılır.
+Mesaj formatı: GameAction enum'unu JSON/Codable ile encode → Data olarak gönder.
+Host belirleme: En yüksek UUID'ye sahip cihaz host olur.
+Koz bilgisi host tarafından tüm oyunculara broadcast edilir.
+6.2 GameKit + Game Center (internet)
+GKMatch ile internet üzerinden gerçek zamanlı eşleşme.
+GKMatchmaker ile 4 kişilik oda kurulumu.
+GKLeaderboard ile liderlik tablosu entegrasyonu.
+GKTurnBasedMatch: Sıra tabanlı (push bildirimli) alternatif — internet gecikmesi toleransı için.
+6.3 Mesaj senkronizasyonu
+Her oyuncu eylemi (kart oynama, koz seçimi) tüm oyunculara broadcast edilir.
+Host, GameState'in tek kaynağı olarak çalışır (authority model).
+Bağlantı kopunca AI devralır veya oyun duraklatılır.
+Yeniden bağlanma: GameState snapshot gönderilerek devam edilir.
+Koz manipülasyonunu önlemek için host validation şarttır. Her kart hamlesi ve koz seçimi host tarafından onaylanmadan uygulanmamalıdır.
+7. Veri saklama ve durum yönetimi
+Aşama 6
+7.1 UserDefaults
+Kullanıcı tercihleri: ses, titreşim, tema, dil, koz modu varsayılanı.
+İstatistikler: oynanan oyun, kazanılan oyun, en yüksek skor.
+7.2 SwiftData / Core Data
+Oyun geçmişi: her oyunun tam kaydı (tarih, oyuncular, turlar, puanlar, koz bilgisi).
+Yeniden oynama: kaydedilen oyunun yüklenerek izlenebilmesi için.
+Öneri: SwiftData (iOS 17+) tercih edilsin; geriye dönük uyumluluk için Core Data.
+7.3 Oyun kaydetme / devam etme
+GameState: Codable → JSON → Documents dizinine yazılır.
+scenePhase: .background'a geçişte otomatik kayıt tetiklenir.
+Uygulama açılışında: yarım oyun varsa "Devam Et" seçeneği sunulur.
+Kaydedilen state'e koz bilgisi (trumpSuit) ve lead sırası (currentLeadPlayerIndex) dahil edilmeli.
+8. Test stratejisi
+Aşama 7
+8.1 Unit test — GameEngine
+Dağıtım testi: 52 kart = 4 × 13 dağıtım, tekrar yok.
+Karo 2 bulma testi: findOpeningPlayer() her zaman doğru oyuncuyu döner.
+Lead sırası testi: currentLeadPlayerIndex her el sonunda (n+1) % 4 ilerliyor.
+Follow-suit testi: rengi olan oyuncu farklı renk oynarsa isValidPlay false döner.
+Koz testi: lead suit yokken koz oynanabiliyor mu? Lead suit varken koz oynanamayor mu?
+TrickEvaluator testi: koz var/yok senaryoları için kazanan doğru mu?
+Puan testi: her kontrat için beklenen ceza puanları örneklerle doğrulanır.
+Batma senaryosu: tüm elleri alan oyuncunun cezası/bonusu doğru mu?
+Kontrat geçişi: 8 kontrat doğru sırayla geçiyor mu?
+8.2 Integration test
+Tam oyun simülasyonu: AI vs AI tam oyun botsuz çalışıyor mu?
+State persistence: GameState → JSON → GameState round-trip kayıpsız mı?
+Multiplayer mock: MockSession ile mesaj gönderi-alım testi.
+8.3 UI test (XCUITest)
+Geçerli kart dokunuşu: kart merkeze taşınıyor mu?
+Geçersiz kart: renk varken farklı renk dokunulduğunda hata gösteriliyor mu?
+Koz göstergesi: koz belirlenince TrumpIndicatorView doğru rengi gösteriyor mu?
+Puan ekranı: kontrat bitişinde puan tablosu doğru görünüyor mu?
+8.4 Performans testleri
+measure { } bloğu ile tam oyun süresi ölçülür.
+Instruments → Leaks: kart animasyonlarında retain cycle kontrolü.
+Instruments → Time Profiler: 60 fps'de kart render kontrolü.
+9. App Store ve yayın hazırlığı
+Aşama 8
+9.1 Teknik gereksinimler
+Minimum iOS: 16.0 önerilir; iOS 17+ SwiftData için gerekli.
+Cihaz desteği: iPhone (portrait zorunlu) + iPad (landscape isteğe bağlı).
+Boyut: kart görselleri vektörel olursa uygulama <30 MB kalabilir.
+Privacy Manifest: PrivacyInfo.xcprivacy dosyası zorunludur (iOS 17.4+).
+ATS: tüm ağ bağlantıları HTTPS/TLS.
+9.2 Erişilebilirlik
+VoiceOver: her kart için accessibilityLabel (ör. "Karo İki — koz kartı") ve accessibilityHint.
+Dynamic Type: fontlar UIFont.preferredFont(for:) ile uyumlu.
+Renk körlüğü: suit'leri renk dışı şekillerle de ayırt edin.
+Reduce Motion: animasyonlar bu tercihe saygı göstermeli.
+9.3 Yerelleştirme
+Localizable.strings ile Türkçe + İngilizce destek.
+Kart değerleri (J, Q, K, A) evrenseldir; kontrat adları ve puan ekranı yerelleştirilmeli.
+Koz kavramı (trump) her dilde doğru çevrilmeli.
+App Store Review için demo hesabı veya 4 kişilik test senaryosu hazırlayın. Reviewer'ın koz oynanmasını ve karo 2 başlangıç kuralını görebilmesi gerekir.
+10. Geliştirici kontrol listesi
+Aşama 9 — Lansman öncesi
+52 kartlık deste doğru oluşturuluyor ve karıştırılıyor
+Karo 2 sahibi oyuncu ilk eli açıyor (findOpeningPlayer())
+Lead sırası kazanandan değil, açıcıdan sonraki oyuncuya geçiyor
+Koz rengi her kontrat başında doğru belirleniyor
+TrumpIndicatorView her kontrat için doğru kozu gösteriyor
+Follow-suit varken koz atılamıyor; kural tüm senaryolarda uygulanıyor
+Koz kartı oynandığında lead suit yoksa geçerli sayılıyor
+TrickEvaluator kozlu tüm senaryolarda doğru kazananı buluyor
+Tüm 8 kontrat doğru puanlanıyor
+AI hiç geçersiz kart oynamıyor
+Oyun kaydedilip devam edilebiliyor (koz ve lead bilgisi korunuyor)
+Kart animasyonları 60 fps akıcı
+VoiceOver ile tüm kartlar ve koz durumu okunabiliyor
+Multiplayer bağlantı kopunca oyun çökmüyor
+PrivacyInfo.xcprivacy eklendi
+iPhone SE (4.7") ve iPad Pro (12.9") test edildi
+Dark Mode ve Light Mode görüntüsü kontrol edildi
+Koz göstergesi her iki modda okunabilir renkte
