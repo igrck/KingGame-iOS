@@ -214,7 +214,7 @@ enum CardSize {
         CardView(card: Card(suit: .hearts, rank: .king), isTrump: true)
         CardView(card: Card(suit: .spades, rank: .ace))
         CardView(card: Card(suit: .diamonds, rank: .two))
-        CardView(isFaceUp: false, card: Card(suit: .clubs, rank: .five))
+        CardView(card: Card(suit: .clubs, rank: .five), isFaceUp: false)
     }
     .padding()
     .background(Color(red: 0.08, green: 0.12, blue: 0.2))

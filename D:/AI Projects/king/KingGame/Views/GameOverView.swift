@@ -6,7 +6,7 @@ struct GameOverView: View {
     
     // Kazanana göre sıralanmış sonuçlar (En yüksek puan en üstte)
     var sortedResults: [PlayerResult] {
-        results.sorted(by: { $0.score > $1.score })
+        results.sorted(by: { $0.totalScore > $1.totalScore })
     }
     
     var body: some View {
@@ -110,9 +110,9 @@ struct PlayerResultRow: View {
             
             Spacer()
             
-            Text("\(result.score)")
+            Text("\(result.totalScore)")
                 .font(.title2.bold())
-                .foregroundStyle(result.score < 0 ? .red : (result.score > 0 ? .green : .white))
+                .foregroundStyle(result.totalScore < 0 ? .red : (result.totalScore > 0 ? .green : .white))
         }
         .padding()
         .background(

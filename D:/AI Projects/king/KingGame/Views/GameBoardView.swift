@@ -45,9 +45,11 @@ struct GameBoardView: View {
                     // Kuzey Rakip
                     if let north = viewModel.playerAt(.north) {
                         OpponentHandView(
-                            player: north,
-                            isActive: viewModel.gameState.currentPlayerIndex == viewModel.playerIndexAt(.north),
-                            position: .north
+                            cardCount: north.hand.count,
+                            position: .north,
+                            playerName: north.name,
+                            isCurrentPlayer: viewModel.gameState.currentPlayerIndex == viewModel.playerIndexAt(.north),
+                            showDiamondBadge: north.hasDiamondTwo && viewModel.gameState.trickNumber == 0
                         )
                     }
                     
@@ -56,8 +58,7 @@ struct GameBoardView: View {
                     // Koz Göstergesi (Sağ)
                     TrumpIndicatorView(
                         trumpSuit: viewModel.trumpSuit,
-                        contractType: viewModel.currentContract,
-                        showLabel: false
+                        contractName: viewModel.currentContract.displayName
                     )
                     .frame(width: 50, height: 50)
                 }
@@ -71,9 +72,11 @@ struct GameBoardView: View {
                     // Batı Rakip
                     if let west = viewModel.playerAt(.west) {
                         OpponentHandView(
-                            player: west,
-                            isActive: viewModel.gameState.currentPlayerIndex == viewModel.playerIndexAt(.west),
-                            position: .west
+                            cardCount: west.hand.count,
+                            position: .west,
+                            playerName: west.name,
+                            isCurrentPlayer: viewModel.gameState.currentPlayerIndex == viewModel.playerIndexAt(.west),
+                            showDiamondBadge: west.hasDiamondTwo && viewModel.gameState.trickNumber == 0
                         )
                         .rotationEffect(.degrees(90))
                         .frame(width: 80) // Rotate nedeniyle width height yer değiştirir
@@ -83,10 +86,10 @@ struct GameBoardView: View {
                     
                     // Ortada Oynanan Kartlar
                     TrickAreaView(
-                        trick: viewModel.currentTrick,
-                        trickWinnerIndex: viewModel.lastTrickWinnerIndex,
-                        players: viewModel.players,
-                        animationNamespace: animation
+                        playedCards: viewModel.currentTrick,
+                        trumpSuit: viewModel.trumpSuit,
+                        animatingTrick: viewModel.animatingTrick,
+                        winnerName: viewModel.lastTrickWinnerName
                     )
                     .frame(width: 250, height: 250)
                     
@@ -95,9 +98,11 @@ struct GameBoardView: View {
                     // Doğu Rakip
                     if let east = viewModel.playerAt(.east) {
                         OpponentHandView(
-                            player: east,
-                            isActive: viewModel.gameState.currentPlayerIndex == viewModel.playerIndexAt(.east),
-                            position: .east
+                            cardCount: east.hand.count,
+                            position: .east,
+                            playerName: east.name,
+                            isCurrentPlayer: viewModel.gameState.currentPlayerIndex == viewModel.playerIndexAt(.east),
+                            showDiamondBadge: east.hasDiamondTwo && viewModel.gameState.trickNumber == 0
                         )
                         .rotationEffect(.degrees(-90))
                         .frame(width: 80)
@@ -110,10 +115,10 @@ struct GameBoardView: View {
                 // Alt kısım: Kullanıcı Eli
                 HandView(
                     cards: viewModel.humanPlayer.hand,
-                    isInteractive: viewModel.isHumanTurn,
-                    playableCheck: { viewModel.isCardPlayable($0) },
-                    onCardPlayed: { viewModel.humanPlayCard($0) },
-                    animationNamespace: animation
+                    trumpSuit: viewModel.trumpSuit,
+                    isHumanTurn: viewModel.isHumanTurn,
+                    isCardPlayable: { viewModel.isCardPlayable($0) },
+                    onCardTap: { viewModel.humanPlayCard($0) }
                 )
                 .padding(.bottom, 20)
                 .background(
@@ -160,9 +165,9 @@ struct GameBoardView: View {
                 ScoreView(
                     players: viewModel.players,
                     roundScores: viewModel.gameState.roundScores,
-                    onClose: {
-                        withAnimation { viewModel.showScorePanel = false }
-                    }
+                    contractName: viewModel.currentContract.displayName,
+                    trickNumber: viewModel.gameState.trickNumber,
+                    isPresented: $viewModel.showScorePanel
                 )
                 .frame(maxWidth: 400, maxHeight: 500)
                 .transition(.scale.combined(with: .opacity))
@@ -208,50 +213,3 @@ struct GameBoardView: View {
     }
 }
 
-// MARK: - Trump Picker View
-struct TrumpPickerView: View {
-    let onSelect: (Suit) -> Void
-    
-    var body: some View {
-        ZStack {
-            Color.black.opacity(0.6).ignoresSafeArea()
-            
-            VStack(spacing: 24) {
-                Text("Koz Seç")
-                    .font(.title.bold())
-                    .foregroundStyle(.white)
-                
-                HStack(spacing: 20) {
-                    ForEach(Suit.allCases) { suit in
-                        Button {
-                            onSelect(suit)
-                        } label: {
-                            VStack(spacing: 12) {
-                                Text(suit.symbol)
-                                    .font(.system(size: 50))
-                                    .foregroundStyle(suit.isRed ? .red : .primary)
-                                
-                                Text(suit.displayName)
-                                    .font(.headline)
-                                    .foregroundStyle(.primary)
-                            }
-                            .frame(width: 100, height: 140)
-                            .background(Color.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                            .shadow(color: .black.opacity(0.2), radius: 10, y: 5)
-                        }
-                    }
-                }
-            }
-            .padding(40)
-            .background(
-                RoundedRectangle(cornerRadius: 24)
-                    .fill(Color(red: 0.15, green: 0.2, blue: 0.3))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 24)
-                    .stroke(Color.white.opacity(0.1), lineWidth: 1)
-            )
-        }
-    }
-}

@@ -37,10 +37,10 @@ class ContractManager {
         return currentContract
     }
     
-    /// Belirli bir kontrata git (test amaçlı)
+    /// Kayıt yükleme / test: oyun kontrat indeksini ayarla (oyun bittiyse `contracts.count`).
     func setContract(at index: Int) {
-        guard index >= 0 && index < contracts.count else { return }
-        currentIndex = index
+        guard index >= 0 else { return }
+        currentIndex = min(index, contracts.count)
     }
     
     /// Kontratı sıfırla

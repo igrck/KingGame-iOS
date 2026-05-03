@@ -16,7 +16,7 @@ struct ContractSummaryView: View {
                         .font(.title2)
                         .foregroundStyle(.white.opacity(0.8))
                     
-                    Text(contract.name)
+                    Text(contract.displayName)
                         .font(.largeTitle.bold())
                         .foregroundStyle(
                             LinearGradient(

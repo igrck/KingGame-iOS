@@ -35,8 +35,9 @@ class GameViewModel {
     var contractIndex: Int { gameState.contractIndex }
     
     // Karo 2 rozeti gösterilecek oyuncu
+    /// İlk el tamamlanana kadar Karo 2 sahibi (açılış oyuncusu) rozeti.
     var diamondTwoPlayerIndex: Int? {
-        guard !gameState.openingRuleApplied || gameState.trickNumber == 0 else { return nil }
+        guard gameState.trickNumber == 0 else { return nil }
         return players.firstIndex(where: { $0.hasDiamondTwo })
     }
     
@@ -174,7 +175,7 @@ class GameViewModel {
         animatingTrick = false
         lastTrickWinnerIndex = nil
         
-        engine.advanceToNextTrick()
+        engine.advanceToNextTrick(leadingWinnerID: winnerID)
         
         if gameState.phase == .scoring {
             // Kontrat bitti

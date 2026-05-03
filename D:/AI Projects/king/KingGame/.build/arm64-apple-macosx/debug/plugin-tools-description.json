@@ -1,0 +1,573 @@
+{
+  "builtTestProducts" : [
+
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.KingGame-arm64-apple-macosx26.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/sources",
+      "importPath" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/App/KingGameApp.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/AIPlayer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/ContractManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/GameEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/ScoreCalculator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/TrickEvaluator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/Card.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/ContractType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/Deck.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/GameState.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/Player.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/ViewModels/GameViewModel.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/CardView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/ContractSummaryView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/GameBoardView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/GameOverView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/HandView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/MainMenuView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/OpponentHandView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/ScoreView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/SettingsView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/TrickAreaView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/TrumpIndicatorView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "KingGame",
+      "moduleOutputPath" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/Modules/KingGame.swiftmodule",
+      "objects" : [
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/KingGameApp.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/AIPlayer.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ContractManager.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/GameEngine.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ScoreCalculator.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/TrickEvaluator.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/Card.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ContractType.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/Deck.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/GameState.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/Player.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/GameViewModel.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/CardView.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ContractSummaryView.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/GameBoardView.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/GameOverView.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/HandView.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/MainMenuView.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/OpponentHandView.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ScoreView.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/SettingsView.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/TrickAreaView.swift.o",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/TrumpIndicatorView.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/include/KingGame-Swift.h",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk",
+        "-target",
+        "x86_64-apple-ios17.0-simulator",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "kinggame"
+      ],
+      "outputFileMapPath" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/KingGameApp.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/AIPlayer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ContractManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/GameEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ScoreCalculator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/TrickEvaluator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/Card.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ContractType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/Deck.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/GameState.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/Player.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/GameViewModel.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/CardView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ContractSummaryView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/GameBoardView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/GameOverView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/HandView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/MainMenuView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/OpponentHandView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ScoreView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/SettingsView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/TrickAreaView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/TrumpIndicatorView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/Modules/KingGame.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/App/KingGameApp.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/AIPlayer.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/ContractManager.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/GameEngine.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/ScoreCalculator.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/TrickEvaluator.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/Card.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/ContractType.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/Deck.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/GameState.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/Player.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/ViewModels/GameViewModel.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/CardView.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/ContractSummaryView.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/GameBoardView.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/GameOverView.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/HandView.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/MainMenuView.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/OpponentHandView.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/ScoreView.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/SettingsView.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/TrickAreaView.swift",
+        "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/TrumpIndicatorView.swift"
+      ],
+      "tempsPath" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "KingGame" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "KingGame",
+      "-package-name",
+      "kinggame",
+      "-c",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/App/KingGameApp.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/AIPlayer.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/ContractManager.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/GameEngine.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/ScoreCalculator.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/TrickEvaluator.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/Card.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/ContractType.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/Deck.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/GameState.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/Player.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/ViewModels/GameViewModel.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/CardView.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/ContractSummaryView.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/GameBoardView.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/GameOverView.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/HandView.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/MainMenuView.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/OpponentHandView.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/ScoreView.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/SettingsView.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/TrickAreaView.swift",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/TrumpIndicatorView.swift",
+      "-I",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx10.13",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/include/KingGame-Swift.h",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.2.sdk",
+      "-target",
+      "x86_64-apple-ios17.0-simulator",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "kinggame",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "KingGame" : [
+
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/App/KingGameApp.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/AIPlayer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/ContractManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/GameEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/ScoreCalculator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/TrickEvaluator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/Card.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/ContractType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/Deck.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/GameState.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Models/Player.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/ViewModels/GameViewModel.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/CardView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/ContractSummaryView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/GameBoardView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/GameOverView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/HandView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/MainMenuView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/OpponentHandView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/ScoreView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/SettingsView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/TrickAreaView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/TrumpIndicatorView.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/sources"
+    },
+    "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}

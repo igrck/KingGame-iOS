@@ -13,6 +13,7 @@ class GameEngine: ObservableObject {
     
     init(gameState: GameState) {
         self.gameState = gameState
+        contractManager.setContract(at: gameState.contractIndex)
     }
     
     // MARK: - Yeni Tur Başlat
@@ -171,10 +172,12 @@ class GameEngine: ObservableObject {
     }
     
     // MARK: - Sonraki El
-    func advanceToNextTrick() {
-        // Lead sırası: bir sonraki oyuncu (rehberdeki özel kural)
-        gameState.currentLeadPlayerIndex = (gameState.currentLeadPlayerIndex + 1) % 4
-        gameState.currentPlayerIndex = gameState.currentLeadPlayerIndex
+    /// Kazanan oyuncu bir sonraki eli açar (standart trick oyunu kuralı).
+    func advanceToNextTrick(leadingWinnerID winnerID: UUID) {
+        if let idx = gameState.players.firstIndex(where: { $0.id == winnerID }) {
+            gameState.currentLeadPlayerIndex = idx
+            gameState.currentPlayerIndex = idx
+        }
         
         // El bilgilerini sıfırla
         gameState.currentTrick = []

@@ -112,7 +112,7 @@ struct ScoreCalculator {
                 }
                 
             case .noLastTwo:
-                let totalTricks = player.wonTricks.count
+                _ = player.wonTricks.count
                 // Son 2 el kontrolü — wonTricks'te indeks bilgisini trickIndex ile takip etmeliyiz
                 // Burada basitleştirme: GameEngine tarafında trickIndex ile puanlama yapılır
                 // ScoreCalculator sadece toplam el sayısını kontrol eder
@@ -121,7 +121,7 @@ struct ScoreCalculator {
                 
             case .king:
                 // Tüm cezalar birleşik
-                var trickCount = player.wonTricks.count
+                let trickCount = player.wonTricks.count
                 var queenCount = 0, kingCount = 0, jackCount = 0, heartCount = 0
                 var hasKingOfHearts = false
                 
