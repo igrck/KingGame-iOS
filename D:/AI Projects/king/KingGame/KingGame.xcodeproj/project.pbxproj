@@ -7,13 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F8779E59BF48DD4C9838A4B /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF519972B0C681FF7F5F8D79 /* AboutView.swift */; };
 		1477308192F5C1726B58224F /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744A11537FAB46BDC50F9214 /* ScoreView.swift */; };
 		27ADA24B4044F34143C858C3 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AC6B3BC8BB190EBB0B1CE0 /* GameOverView.swift */; };
 		2D30E4696DD17B014C4B3D13 /* ContractSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A8D6EE08AC38D9AAF6DA3ED /* ContractSummaryView.swift */; };
 		30B28B547A069D626BDC7A75 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AB5CBF5DF153B9A1247D67 /* GameState.swift */; };
+		318BC1401D79E298313A06EC /* RulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E141AFFB4ABB49B6FA3A839 /* RulesView.swift */; };
 		397B16E03233E92CA298D218 /* ContractManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB470B008958CF7CC57CBAC8 /* ContractManager.swift */; };
+		4782312D7BBDEE8C54F31D23 /* SelectionPhaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3261793A47A22E95C30381 /* SelectionPhaseView.swift */; };
 		5BC7F702DF4E0F621AD1CCE5 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1124715DE809D1A4E60F3E76 /* Card.swift */; };
 		5C43584674D5541408AED2F8 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFD369C7244CE5BAF3ECE68 /* GameViewModel.swift */; };
+		62C3F654A272AA8493CFBE35 /* PenaltyEnforcer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6F1EB89F6457216FFA8C3E /* PenaltyEnforcer.swift */; };
+		6662D144111C386F0AC67672 /* AutoPlayTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDAA3827931CDCBFED49D6B /* AutoPlayTimerView.swift */; };
 		6DD3AA3731E7D4DA209F8964 /* ScoreCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349402661B292902D729191C /* ScoreCalculator.swift */; };
 		6E0A0DE92A706FF2EE208126 /* HandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F3FDF014A5A6F81FCE192D /* HandView.swift */; };
 		74ED30A5DECE6E9E2236C7FB /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448635850DCB370936810363 /* GameEngine.swift */; };
@@ -25,6 +30,7 @@
 		C19F29E35AEAD3EB08111EB8 /* OpponentHandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA89FB3CA6FF7077A0CD95EE /* OpponentHandView.swift */; };
 		C2526DA10008EDBA8F495338 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA036D8EBB57A94342584A6 /* SettingsView.swift */; };
 		D004134E5C6896CB0335D24E /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBED7E49D9A89D7CD445C9C /* MainMenuView.swift */; };
+		D788E2EA9B65ABBC9D9925EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0A92B0A30C6D7E865205FBD /* Assets.xcassets */; };
 		E1CA5B6B1E7FD49B5A9A5311 /* ContractType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4CE3949C5F64D101012BFD /* ContractType.swift */; };
 		E230747B485535FBDF23659E /* AIPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9E5CA19AF4BCF98E0ED241 /* AIPlayer.swift */; };
 		E68E018DB75DBB3B9520ABED /* GameBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F200618534EED1361399C2 /* GameBoardView.swift */; };
@@ -37,7 +43,9 @@
 		0129AA7628E035555830D8EC /* TrickAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrickAreaView.swift; sourceTree = "<group>"; };
 		0835A3FAC45C39AE96F38F51 /* TrickEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrickEvaluator.swift; sourceTree = "<group>"; };
 		1124715DE809D1A4E60F3E76 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		2C3261793A47A22E95C30381 /* SelectionPhaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionPhaseView.swift; sourceTree = "<group>"; };
 		2CBED7E49D9A89D7CD445C9C /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
+		2E141AFFB4ABB49B6FA3A839 /* RulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesView.swift; sourceTree = "<group>"; };
 		3477B2DED723443E4C4B861D /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		349402661B292902D729191C /* ScoreCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCalculator.swift; sourceTree = "<group>"; };
 		39AB5CBF5DF153B9A1247D67 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
@@ -53,10 +61,14 @@
 		AA89FB3CA6FF7077A0CD95EE /* OpponentHandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpponentHandView.swift; sourceTree = "<group>"; };
 		AB470B008958CF7CC57CBAC8 /* ContractManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractManager.swift; sourceTree = "<group>"; };
 		AC772F70BD457752E7A38C82 /* KingGame.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = KingGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF519972B0C681FF7F5F8D79 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		B6F200618534EED1361399C2 /* GameBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardView.swift; sourceTree = "<group>"; };
 		BC180B3A69EE7D5684752381 /* TrumpIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrumpIndicatorView.swift; sourceTree = "<group>"; };
+		C0A92B0A30C6D7E865205FBD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0AC6B3BC8BB190EBB0B1CE0 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+		EB6F1EB89F6457216FFA8C3E /* PenaltyEnforcer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenaltyEnforcer.swift; sourceTree = "<group>"; };
 		EE9E5CA19AF4BCF98E0ED241 /* AIPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIPlayer.swift; sourceTree = "<group>"; };
+		FDDAA3827931CDCBFED49D6B /* AutoPlayTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoPlayTimerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -91,6 +103,8 @@
 		5EE3FDF95D825973DA23C0A3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AF519972B0C681FF7F5F8D79 /* AboutView.swift */,
+				FDDAA3827931CDCBFED49D6B /* AutoPlayTimerView.swift */,
 				66871543F64AA2AC0BA9D607 /* CardView.swift */,
 				7A8D6EE08AC38D9AAF6DA3ED /* ContractSummaryView.swift */,
 				B6F200618534EED1361399C2 /* GameBoardView.swift */,
@@ -98,7 +112,9 @@
 				00F3FDF014A5A6F81FCE192D /* HandView.swift */,
 				2CBED7E49D9A89D7CD445C9C /* MainMenuView.swift */,
 				AA89FB3CA6FF7077A0CD95EE /* OpponentHandView.swift */,
+				2E141AFFB4ABB49B6FA3A839 /* RulesView.swift */,
 				744A11537FAB46BDC50F9214 /* ScoreView.swift */,
+				2C3261793A47A22E95C30381 /* SelectionPhaseView.swift */,
 				9BA036D8EBB57A94342584A6 /* SettingsView.swift */,
 				0129AA7628E035555830D8EC /* TrickAreaView.swift */,
 				BC180B3A69EE7D5684752381 /* TrumpIndicatorView.swift */,
@@ -112,6 +128,7 @@
 				EE9E5CA19AF4BCF98E0ED241 /* AIPlayer.swift */,
 				AB470B008958CF7CC57CBAC8 /* ContractManager.swift */,
 				448635850DCB370936810363 /* GameEngine.swift */,
+				EB6F1EB89F6457216FFA8C3E /* PenaltyEnforcer.swift */,
 				349402661B292902D729191C /* ScoreCalculator.swift */,
 				0835A3FAC45C39AE96F38F51 /* TrickEvaluator.swift */,
 			);
@@ -121,6 +138,7 @@
 		D5A3D7006CE0D0867A82D718 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				C0A92B0A30C6D7E865205FBD /* Assets.xcassets */,
 				6EC840E3C1F7B780DC0EF52F /* KingGameApp.swift */,
 			);
 			path = App;
@@ -146,6 +164,7 @@
 			buildConfigurationList = 212960EB0253510BBB8871DC /* Build configuration list for PBXNativeTarget "KingGame" */;
 			buildPhases = (
 				7DCFD0A318325098D0F04732 /* Sources */,
+				7AA1ABB1032EE8C385DF2DA0 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -167,6 +186,10 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					7F2F6323A346A8E1CF336317 = {
+						DevelopmentTeam = Y87LV5JK4T;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 74BCC2C667CB726B4B88E0BE /* Build configuration list for PBXProject "KingGame" */;
@@ -188,12 +211,25 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		7AA1ABB1032EE8C385DF2DA0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D788E2EA9B65ABBC9D9925EE /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7DCFD0A318325098D0F04732 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				E230747B485535FBDF23659E /* AIPlayer.swift in Sources */,
+				0F8779E59BF48DD4C9838A4B /* AboutView.swift in Sources */,
+				6662D144111C386F0AC67672 /* AutoPlayTimerView.swift in Sources */,
 				5BC7F702DF4E0F621AD1CCE5 /* Card.swift in Sources */,
 				82B6F0FB16BA079B6534EEC2 /* CardView.swift in Sources */,
 				397B16E03233E92CA298D218 /* ContractManager.swift in Sources */,
@@ -209,9 +245,12 @@
 				BA0AA0AA6DAE0AB4787CC514 /* KingGameApp.swift in Sources */,
 				D004134E5C6896CB0335D24E /* MainMenuView.swift in Sources */,
 				C19F29E35AEAD3EB08111EB8 /* OpponentHandView.swift in Sources */,
+				62C3F654A272AA8493CFBE35 /* PenaltyEnforcer.swift in Sources */,
 				7A6097220E695CDB9981E1F1 /* Player.swift in Sources */,
+				318BC1401D79E298313A06EC /* RulesView.swift in Sources */,
 				6DD3AA3731E7D4DA209F8964 /* ScoreCalculator.swift in Sources */,
 				1477308192F5C1726B58224F /* ScoreView.swift in Sources */,
+				4782312D7BBDEE8C54F31D23 /* SelectionPhaseView.swift in Sources */,
 				C2526DA10008EDBA8F495338 /* SettingsView.swift in Sources */,
 				9870CA4BC6FF3098BA65F28D /* TrickAreaView.swift in Sources */,
 				EB0FB43CD91CC4C217B299B7 /* TrickEvaluator.swift in Sources */,
@@ -226,10 +265,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CODE_SIGNING_ALLOWED = YES;
-				DEVELOPMENT_TEAM = JSD887S42L;
+				DEVELOPMENT_TEAM = Y87LV5JK4T;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Kralın 20 Eli";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -237,7 +278,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.gurocak.KingGame;
+				PRODUCT_BUNDLE_IDENTIFIER = com.igurocak.KingGame;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -247,10 +288,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CODE_SIGNING_ALLOWED = YES;
-				DEVELOPMENT_TEAM = JSD887S42L;
+				DEVELOPMENT_TEAM = Y87LV5JK4T;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Kralın 20 Eli";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -258,7 +301,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.gurocak.KingGame;
+				PRODUCT_BUNDLE_IDENTIFIER = com.igurocak.KingGame;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

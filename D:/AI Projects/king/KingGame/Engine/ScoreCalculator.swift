@@ -1,180 +1,125 @@
 import Foundation
 
 // MARK: - ScoreCalculator (Puan Hesaplayıcı)
-/// Kontrat bazlı ceza puanı hesaplama
+/// Rehber §1.7 puan sistemi esas alınarak yeniden yazıldı.
 struct ScoreCalculator {
-    
-    /// Bir kontrat sonunda tüm oyuncuların puanlarını hesapla
-    /// - Parameters:
-    ///   - players: Oyuncular (wonTricks dolu)
-    ///   - contract: Aktif kontrat
-    /// - Returns: Oyuncu UUID → puan dictionary
-    static func calculateScores(
-        for players: [Player],
-        contract: ContractType
-    ) -> [UUID: Int] {
-        var scores: [UUID: Int] = [:]
-        
-        for player in players {
-            var totalPenalty = 0
-            
-            for (trickIndex, trick) in player.wonTricks.enumerated() {
-                let penalty = PenaltyConfig.calculatePenalty(
-                    for: trick,
-                    contract: contract,
-                    trickIndex: trickIndex,
-                    totalTricks: 13
-                )
-                totalPenalty += penalty
-            }
-            
-            scores[player.id] = totalPenalty
-        }
-        
-        return scores
-    }
-    
-    /// Kontrat sonunda detaylı puan raporu
+
+    /// Kontrat sonunda tüm oyuncuların puan raporunu hazırla
     static func detailedReport(
         for players: [Player],
         contract: ContractType
     ) -> [PlayerScoreDetail] {
         var details: [PlayerScoreDetail] = []
-        
+
         for player in players {
             var penalties: [PenaltyDetail] = []
-            var totalPenalty = 0
-            
+            var totalScore = 0
+
             switch contract {
-            case .noTricks:
+
+            // MARK: Koz Oyunları (+50/el)
+            case .trumpSpades, .trumpHearts, .trumpDiamonds, .trumpClubs:
+                let trickCount = player.wonTricks.count
+                if trickCount > 0 {
+                    let points = trickCount * 50
+                    penalties.append(PenaltyDetail(description: "\(trickCount) el aldı", points: points))
+                    totalScore += points
+                }
+
+            // MARK: El Almaz (-50/el)
+            case .elAlmaz:
                 let trickCount = player.wonTricks.count
                 if trickCount > 0 {
                     let penalty = trickCount * -50
                     penalties.append(PenaltyDetail(description: "\(trickCount) el aldı", points: penalty))
-                    totalPenalty += penalty
+                    totalScore += penalty
                 }
-                
-            case .noQueens:
-                var queenCount = 0
+
+            // MARK: Kupa Almaz (-30/kupa)
+            case .kupaAlmaz:
+                var kupaCount = 0
                 for trick in player.wonTricks {
-                    queenCount += trick.filter { $0.rank == .queen }.count
+                    kupaCount += trick.filter { $0.suit == .hearts }.count
                 }
-                if queenCount > 0 {
-                    let penalty = queenCount * -100
-                    penalties.append(PenaltyDetail(description: "\(queenCount) kız aldı", points: penalty))
-                    totalPenalty += penalty
+                if kupaCount > 0 {
+                    let penalty = kupaCount * -30
+                    penalties.append(PenaltyDetail(description: "\(kupaCount) kupa aldı", points: penalty))
+                    totalScore += penalty
                 }
-                
-            case .noKings:
-                var kingCount = 0
+
+            // MARK: Kız Almaz (-100/kız)
+            case .kizAlmaz:
+                var kizCount = 0
                 for trick in player.wonTricks {
-                    kingCount += trick.filter { $0.rank == .king }.count
+                    kizCount += trick.filter { $0.rank == .queen }.count
                 }
-                if kingCount > 0 {
-                    let penalty = kingCount * -150
-                    penalties.append(PenaltyDetail(description: "\(kingCount) kral aldı", points: penalty))
-                    totalPenalty += penalty
+                if kizCount > 0 {
+                    let penalty = kizCount * -100
+                    penalties.append(PenaltyDetail(description: "\(kizCount) kız aldı", points: penalty))
+                    totalScore += penalty
                 }
-                
-            case .noJacks:
-                var jackCount = 0
+
+            // MARK: Erkek Almaz (-60/erkek: vale veya papaz)
+            case .erkekAlmaz:
+                var erkekCount = 0
                 for trick in player.wonTricks {
-                    jackCount += trick.filter { $0.rank == .jack }.count
+                    erkekCount += trick.filter { $0.isMale }.count
                 }
-                if jackCount > 0 {
-                    let penalty = jackCount * -75
-                    penalties.append(PenaltyDetail(description: "\(jackCount) vale aldı", points: penalty))
-                    totalPenalty += penalty
+                if erkekCount > 0 {
+                    let penalty = erkekCount * -60
+                    penalties.append(PenaltyDetail(description: "\(erkekCount) erkek (vale/papaz) aldı", points: penalty))
+                    totalScore += penalty
                 }
-                
-            case .noHearts:
-                var heartCount = 0
+
+            // MARK: Son İki (-180/el — sadece son 2 el)
+            case .sonIki:
+                // wonTricks sıralaması: ilk alınan önce
+                let total = player.wonTricks.count
+                let totalInContract = 13 // Standart el sayısı
+                let sonIkiCount = 0
+                // Tüm oyuncuların trick index'ini bilmiyoruz burada,
+                // GameEngine'de trickIndex bazlı hesaplama yapılıyor.
+                // Burada basitleştirilmiş: son 2 el kontrolü roundScores üzerinden yapılır.
+                // Bu metod sadece görsel rapor için; gerçek puan GameEngine'de hesaplanır.
+                _ = total
+                _ = totalInContract
+                _ = sonIkiCount
+                // Puan GameEngine'deki roundScores'dan alınır
+                let sonIkiScore = 0 // Placeholder — gerçek değer GameEngine'den gelir
+                if sonIkiScore != 0 {
+                    penalties.append(PenaltyDetail(description: "Son iki el", points: sonIkiScore))
+                    totalScore += sonIkiScore
+                }
+
+            // MARK: Rıfkı (-320 sabit)
+            case .rifki:
+                var hasRifki = false
                 for trick in player.wonTricks {
-                    heartCount += trick.filter { $0.suit == .hearts }.count
-                }
-                if heartCount > 0 {
-                    let penalty = heartCount * -50
-                    penalties.append(PenaltyDetail(description: "\(heartCount) kupa aldı", points: penalty))
-                    totalPenalty += penalty
-                }
-                
-            case .noKingOfHearts:
-                var hasKingOfHearts = false
-                for trick in player.wonTricks {
-                    if trick.contains(where: { $0.suit == .hearts && $0.rank == .king }) {
-                        hasKingOfHearts = true
+                    if trick.contains(where: { $0.isRifki }) {
+                        hasRifki = true
                         break
                     }
                 }
-                if hasKingOfHearts {
-                    penalties.append(PenaltyDetail(description: "Kupa Kralı aldı", points: -200))
-                    totalPenalty += -200
-                }
-                
-            case .noLastTwo:
-                _ = player.wonTricks.count
-                // Son 2 el kontrolü — wonTricks'te indeks bilgisini trickIndex ile takip etmeliyiz
-                // Burada basitleştirme: GameEngine tarafında trickIndex ile puanlama yapılır
-                // ScoreCalculator sadece toplam el sayısını kontrol eder
-                // Bu detay GameEngine'de halledilecek
-                break
-                
-            case .king:
-                // Tüm cezalar birleşik
-                let trickCount = player.wonTricks.count
-                var queenCount = 0, kingCount = 0, jackCount = 0, heartCount = 0
-                var hasKingOfHearts = false
-                
-                for trick in player.wonTricks {
-                    queenCount += trick.filter { $0.rank == .queen }.count
-                    kingCount += trick.filter { $0.rank == .king }.count
-                    jackCount += trick.filter { $0.rank == .jack }.count
-                    heartCount += trick.filter { $0.suit == .hearts }.count
-                    if trick.contains(where: { $0.suit == .hearts && $0.rank == .king }) {
-                        hasKingOfHearts = true
-                    }
-                }
-                
-                if trickCount > 0 {
-                    let p = trickCount * -50
-                    penalties.append(PenaltyDetail(description: "\(trickCount) el: \(p)", points: p))
-                    totalPenalty += p
-                }
-                if queenCount > 0 {
-                    let p = queenCount * -100
-                    penalties.append(PenaltyDetail(description: "\(queenCount) kız: \(p)", points: p))
-                    totalPenalty += p
-                }
-                if kingCount > 0 {
-                    let p = kingCount * -150
-                    penalties.append(PenaltyDetail(description: "\(kingCount) kral: \(p)", points: p))
-                    totalPenalty += p
-                }
-                if jackCount > 0 {
-                    let p = jackCount * -75
-                    penalties.append(PenaltyDetail(description: "\(jackCount) vale: \(p)", points: p))
-                    totalPenalty += p
-                }
-                if heartCount > 0 {
-                    let p = heartCount * -50
-                    penalties.append(PenaltyDetail(description: "\(heartCount) kupa: \(p)", points: p))
-                    totalPenalty += p
-                }
-                if hasKingOfHearts {
-                    penalties.append(PenaltyDetail(description: "Kupa Kralı: -200", points: -200))
-                    totalPenalty += -200
+                if hasRifki {
+                    penalties.append(PenaltyDetail(description: "Rıfkı (♥K) aldı", points: -320))
+                    totalScore += -320
                 }
             }
-            
+
             details.append(PlayerScoreDetail(
                 playerID: player.id,
                 playerName: player.name,
                 penalties: penalties,
-                totalScore: totalPenalty
+                totalScore: totalScore
             ))
         }
-        
+
         return details
+    }
+
+    /// Toplam oyun sonucu hesapla (≥0 kazandı, <0 kaybetti)
+    static func isWinner(_ player: Player) -> Bool {
+        player.score >= 0
     }
 }
 

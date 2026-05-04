@@ -1,4 +1,5 @@
 import SwiftUI
+import AudioToolbox
 
 // MARK: - TrumpIndicatorView (Koz Göstergesi)
 struct TrumpIndicatorView: View {
@@ -48,13 +49,13 @@ struct TrumpIndicatorView: View {
                         )
                 )
         )
-        .onChange(of: isRevealing) { _, revealing in
+        .onChange(of: isRevealing) { revealing in
             if revealing {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.5).repeatCount(3, autoreverses: true)) {
                     scale = 1.4
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    withAnimation(.spring) { scale = 1 }
+                    withAnimation(.spring()) { scale = 1 }
                 }
             }
         }
@@ -65,6 +66,8 @@ struct TrumpIndicatorView: View {
 struct TrumpPickerView: View {
     let onSelect: (Suit) -> Void
     @State private var appeared = false
+    @AppStorage("soundEnabled") private var soundEnabled = true
+    @AppStorage("hapticsEnabled") private var hapticsEnabled = true
     
     var body: some View {
         VStack(spacing: 20) {
@@ -81,7 +84,14 @@ struct TrumpPickerView: View {
             HStack(spacing: 16) {
                 ForEach(Suit.allCases) { suit in
                     Button {
-                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        if hapticsEnabled {
+                            #if canImport(UIKit)
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                            #endif
+                        }
+                        if soundEnabled {
+                            AudioServicesPlaySystemSound(1104)
+                        }
                         onSelect(suit)
                     } label: {
                         VStack(spacing: 8) {

@@ -1,137 +1,152 @@
 import Foundation
 
 // MARK: - ContractType (Kontrat Türleri)
-/// King oyunundaki 8 kontrat — sabit sıra ile oynanır
-enum ContractType: Int, CaseIterable, Codable, Identifiable {
-    case noTricks = 0       // El alma
-    case noQueens = 1       // Kız alma
-    case noKings = 2        // Kral alma
-    case noJacks = 3        // Erkek alma
-    case noHearts = 4       // Kupa alma
-    case noKingOfHearts = 5 // Kupa kral alma
-    case noLastTwo = 6      // Son iki el
-    case king = 7           // King (tüm cezalar aktif)
-    
-    var id: Int { rawValue }
-    
-    /// Kontrat adı (Türkçe)
+/// Rehber modeli: Koz oyunları (+puan) + Ceza oyunları (-puan)
+enum ContractType: String, CaseIterable, Codable, Identifiable {
+
+    // MARK: Koz Oyunları (her el +50 puan)
+    case trumpSpades   = "trumpSpades"   // Maça Koz ♠
+    case trumpHearts   = "trumpHearts"   // Kupa Koz ♥
+    case trumpDiamonds = "trumpDiamonds" // Karo Koz ♦
+    case trumpClubs    = "trumpClubs"    // Sinek Koz ♣
+
+    // MARK: Ceza Oyunları (koz yok)
+    case elAlmaz    = "elAlmaz"    // El Almaz   — her el -50
+    case kupaAlmaz  = "kupaAlmaz"  // Kupa Almaz — her kupa -30
+    case kizAlmaz   = "kizAlmaz"   // Kız Almaz  — her kız  -100
+    case erkekAlmaz = "erkekAlmaz" // Erkek Almaz — vale/papaz -60
+    case sonIki     = "sonIki"     // Son İki El  — -180/el
+    case rifki      = "rifki"      // Rıfkı (♥K) — -320 sabit
+
+    var id: String { rawValue }
+
+    /// Koz mu yoksa ceza mu?
+    var isTrumpContract: Bool {
+        switch self {
+        case .trumpSpades, .trumpHearts, .trumpDiamonds, .trumpClubs: return true
+        default: return false
+        }
+    }
+
+    /// Koz rengi (sadece koz oyunlarında dolu)
+    var trumpSuit: Suit? {
+        switch self {
+        case .trumpSpades:   return .spades
+        case .trumpHearts:   return .hearts
+        case .trumpDiamonds: return .diamonds
+        case .trumpClubs:    return .clubs
+        default:             return nil
+        }
+    }
+
+    /// Türkçe görüntü adı
     var displayName: String {
         switch self {
-        case .noTricks:       return "El Alma"
-        case .noQueens:       return "Kız Alma"
-        case .noKings:        return "Kral Alma"
-        case .noJacks:        return "Erkek Alma"
-        case .noHearts:       return "Kupa Alma"
-        case .noKingOfHearts: return "Kupa Kral"
-        case .noLastTwo:      return "Son İki El"
-        case .king:           return "King"
+        case .trumpSpades:   return "Maça Koz ♠"
+        case .trumpHearts:   return "Kupa Koz ♥"
+        case .trumpDiamonds: return "Karo Koz ♦"
+        case .trumpClubs:    return "Sinek Koz ♣"
+        case .elAlmaz:       return "El Almaz"
+        case .kupaAlmaz:     return "Kupa Almaz"
+        case .kizAlmaz:      return "Kız Almaz"
+        case .erkekAlmaz:    return "Erkek Almaz"
+        case .sonIki:        return "Son İki"
+        case .rifki:         return "Rıfkı"
         }
     }
-    
-    /// Kontrat açıklaması
+
+    /// Kısa açıklama
     var description: String {
         switch self {
-        case .noTricks:       return "Hiç el almamaya çalışın"
-        case .noQueens:       return "Kız (Q) kartı almaktan kaçının"
-        case .noKings:        return "Kral (K) kartı almaktan kaçının"
-        case .noJacks:        return "Vale (J) kartı almaktan kaçının"
-        case .noHearts:       return "Kupa kartı almaktan kaçının"
-        case .noKingOfHearts: return "Kupa Kralı (♥K) almaktan kaçının"
-        case .noLastTwo:      return "Son 2 eli almaktan kaçının"
-        case .king:           return "Tüm cezalar aynı anda aktif!"
+        case .trumpSpades:   return "Maça kozlu — her el +50 puan"
+        case .trumpHearts:   return "Kupa kozlu — her el +50 puan"
+        case .trumpDiamonds: return "Karo kozlu — her el +50 puan"
+        case .trumpClubs:    return "Sinek kozlu — her el +50 puan"
+        case .elAlmaz:       return "Hiç el almamaya çalışın (-50/el)"
+        case .kupaAlmaz:     return "Kupa almaktan kaçının (-30/kupa)"
+        case .kizAlmaz:      return "Kız (Q) almaktan kaçının (-100/kız)"
+        case .erkekAlmaz:    return "Erkek (Vale/Papaz) almaktan kaçının (-60/erkek)"
+        case .sonIki:        return "Son 2 eli almaktan kaçının (-180/el)"
+        case .rifki:         return "♥K almaktan kaçının (-320 sabit)"
         }
     }
-    
-    /// Kontrat ikonu (SF Symbol)
+
+    /// SF Symbol ikonu
     var iconName: String {
         switch self {
-        case .noTricks:       return "hand.raised.slash"
-        case .noQueens:       return "crown"
-        case .noKings:        return "crown.fill"
-        case .noJacks:        return "person.slash"
-        case .noHearts:       return "heart.slash"
-        case .noKingOfHearts: return "heart.slash.fill"
-        case .noLastTwo:      return "arrow.down.to.line"
-        case .king:           return "exclamationmark.triangle.fill"
+        case .trumpSpades:   return "suit.spade.fill"
+        case .trumpHearts:   return "suit.heart.fill"
+        case .trumpDiamonds: return "suit.diamond.fill"
+        case .trumpClubs:    return "suit.club.fill"
+        case .elAlmaz:       return "hand.raised.slash"
+        case .kupaAlmaz:     return "heart.slash"
+        case .kizAlmaz:      return "crown"
+        case .erkekAlmaz:    return "person.slash"
+        case .sonIki:        return "arrow.down.to.line"
+        case .rifki:         return "exclamationmark.triangle.fill"
         }
-    }
-    
-    /// Bu kontratta koz aktif mi?
-    var isTrumpActive: Bool {
-        true // Tüm kontratlarda koz aktif
-    }
-    
-    /// Sabit sıra ile bir sonraki kontrat
-    var next: ContractType? {
-        ContractType(rawValue: rawValue + 1)
     }
 }
 
-// MARK: - PenaltyConfig (Ceza Yapılandırması)
-/// Her kontrat için hangi kartların ceza taşıdığını ve puanlarını tanımlar
+// MARK: - PenaltyConfig (Ceza Hesaplama — Rehber Değerleri)
 struct PenaltyConfig {
-    
-    /// Bir el (trick) içindeki kartlardan ceza puanı hesapla
-    static func calculatePenalty(for cards: [Card], contract: ContractType, trickIndex: Int, totalTricks: Int) -> Int {
+
+    /// Koz turu: kazanılan her el için puan
+    static let trumpTrickPoints: Int = 50
+
+    /// Bir elde oynanan kartlardan ceza puan hesapla
+    /// - Parameters:
+    ///   - cards: Elde alınan kartlar
+    ///   - contract: Aktif kontrat türü
+    ///   - trickIndex: Bu elim kaçıncı el olduğu (0 tabanlı)
+    ///   - totalTricks: Toplam el sayısı (13)
+    static func calculatePenalty(
+        for cards: [Card],
+        contract: ContractType,
+        trickIndex: Int,
+        totalTricks: Int
+    ) -> Int {
         switch contract {
-        case .noTricks:
-            // Her el -50 puan
+
+        // --- Koz oyunları: pozitif puan ---
+        case .trumpSpades, .trumpHearts, .trumpDiamonds, .trumpClubs:
+            return trumpTrickPoints  // +50 her el
+
+        // --- El Almaz: her el -50 ---
+        case .elAlmaz:
             return -50
-            
-        case .noQueens:
-            // Her Kız (Q) -100 puan
-            let queenCount = cards.filter { $0.rank == .queen }.count
-            return queenCount * -100
-            
-        case .noKings:
-            // Her Kral (K) -150 puan
-            let kingCount = cards.filter { $0.rank == .king }.count
-            return kingCount * -150
-            
-        case .noJacks:
-            // Her Vale (J) -75 puan
-            let jackCount = cards.filter { $0.rank == .jack }.count
-            return jackCount * -75
-            
-        case .noHearts:
-            // Her Kupa kartı -50 puan
-            let heartCount = cards.filter { $0.suit == .hearts }.count
-            return heartCount * -50
-            
-        case .noKingOfHearts:
-            // Kupa Kralı (♥K) -200 puan
-            let hasKingOfHearts = cards.contains { $0.suit == .hearts && $0.rank == .king }
-            return hasKingOfHearts ? -200 : 0
-            
-        case .noLastTwo:
-            // Son 2 el -250 puan
+
+        // --- Kupa Almaz: her kupa -30 ---
+        case .kupaAlmaz:
+            let kupaCount = cards.filter { $0.suit == .hearts }.count
+            return kupaCount * -30
+
+        // --- Kız Almaz: her kız -100 ---
+        case .kizAlmaz:
+            let kizCount = cards.filter { $0.rank == .queen }.count
+            return kizCount * -100
+
+        // --- Erkek Almaz: vale veya papaz (♠♥♦♣ hepsi) -60 ---
+        case .erkekAlmaz:
+            let erkekCount = cards.filter { $0.isMale }.count
+            return erkekCount * -60
+
+        // --- Son İki: sadece son 2 el cezalı -180 ---
+        case .sonIki:
             let isLastTwo = trickIndex >= (totalTricks - 2)
-            return isLastTwo ? -250 : 0
-            
-        case .king:
-            // Tüm cezalar birleşik
-            var total = 0
-            total += -50 // El alma cezası
-            total += cards.filter { $0.rank == .queen }.count * -100
-            total += cards.filter { $0.rank == .king }.count * -150
-            total += cards.filter { $0.rank == .jack }.count * -75
-            total += cards.filter { $0.suit == .hearts }.count * -50
-            if cards.contains(where: { $0.suit == .hearts && $0.rank == .king }) {
-                total += -200
-            }
-            // Son iki el kontrolü king kontratında da aktif
-            let isLastTwo = trickIndex >= (totalTricks - 2)
-            if isLastTwo {
-                total += -250
-            }
-            return total
+            return isLastTwo ? -180 : 0
+
+        // --- Rıfkı: ♥K alındığında -320 ---
+        case .rifki:
+            let hasRifki = cards.contains { $0.isRifki }
+            return hasRifki ? -320 : 0
         }
     }
 }
 
 // MARK: - TrumpMode (Koz Belirleme Modu)
 enum TrumpMode: String, Codable {
-    case dealerChooses = "dealerChooses"   // Dağıtıcı seçer (varsayılan)
-    case fixed = "fixed"                   // Sabit koz
-    case topCard = "topCard"               // Açık kart kozu
+    case dealerChooses = "dealerChooses"
+    case fixed         = "fixed"
+    case topCard       = "topCard"
 }

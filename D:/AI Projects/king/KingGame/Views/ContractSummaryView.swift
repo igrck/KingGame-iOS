@@ -12,7 +12,7 @@ struct ContractSummaryView: View {
             VStack(spacing: 24) {
                 // Başlık
                 VStack(spacing: 8) {
-                    Text("Kontrat Bitti")
+                    Text("El Bitti")
                         .font(.title2)
                         .foregroundStyle(.white.opacity(0.8))
                     
@@ -40,7 +40,7 @@ struct ContractSummaryView: View {
                 
                 // Devam Butonu
                 Button(action: onContinue) {
-                    Text("Sonraki Kontrat")
+                    Text("Sonraki El")
                         .font(.headline)
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)

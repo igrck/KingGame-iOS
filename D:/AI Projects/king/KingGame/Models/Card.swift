@@ -154,6 +154,36 @@ struct Card: Identifiable, Hashable, Codable {
         suit == .diamonds && rank == .two
     }
     
+    /// Erkek mi? (Vale veya Papaz — tüm renkler)
+    var isMale: Bool {
+        rank == .jack || rank == .king
+    }
+    
+    /// Rıfkı mı? (Kupa Papazı = ♥K)
+    var isRifki: Bool {
+        suit == .hearts && rank == .king
+    }
+    
+    /// Aktif kontratta cezalı kart mı?
+    func isPenaltyCard(for contract: ContractType) -> Bool {
+        switch contract {
+        case .trumpSpades, .trumpHearts, .trumpDiamonds, .trumpClubs:
+            return false // Koz oyunlarında ceza kartı yok
+        case .elAlmaz:
+            return false // Her el cezalı, kart bağımsız
+        case .kupaAlmaz:
+            return suit == .hearts
+        case .kizAlmaz:
+            return rank == .queen
+        case .erkekAlmaz:
+            return isMale
+        case .sonIki:
+            return false // Durum bazlı, kart bağımsız
+        case .rifki:
+            return isRifki
+        }
+    }
+    
     // MARK: - Hashable (id bazlı değil, suit+rank bazlı eşleştirme)
     func hash(into hasher: inout Hasher) {
         hasher.combine(suit)

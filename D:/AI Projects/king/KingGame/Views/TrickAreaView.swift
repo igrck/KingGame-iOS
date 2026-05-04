@@ -1,4 +1,5 @@
 import SwiftUI
+import AudioToolbox
 
 // MARK: - TrickAreaView (Oynanan Kartlar Alanı)
 struct TrickAreaView: View {
@@ -8,6 +9,9 @@ struct TrickAreaView: View {
     let winnerName: String?
     
     @State private var trumpGlow = false
+    
+    @AppStorage("soundEnabled") private var soundEnabled = true
+    @AppStorage("hapticsEnabled") private var hapticsEnabled = true
     
     var body: some View {
         ZStack {
@@ -84,7 +88,12 @@ struct TrickAreaView: View {
             // Koz kartı oynandığında parıltı tetikle
             if let last = playedCards.last, last.card.isTrump(trumpSuit) {
                 trumpGlow = true
-                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                if hapticsEnabled {
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                }
+                if soundEnabled {
+                    AudioServicesPlaySystemSound(1057)
+                }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
                     trumpGlow = false
                 }

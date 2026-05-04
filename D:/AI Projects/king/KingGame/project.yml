@@ -1,6 +1,6 @@
 name: KingGame
 options:
-  bundleIdPrefix: com.example
+  bundleIdPrefix: com.igurocak
 targets:
   KingGame:
     type: application
@@ -14,9 +14,10 @@ targets:
       - Views
     settings:
       base:
+        ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: NO
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
         GENERATE_INFOPLIST_FILE: YES
-        CODE_SIGN_IDENTITY: ""
-        CODE_SIGNING_REQUIRED: NO
-        CODE_SIGNING_ALLOWED: NO
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: Y87LV5JK4T
+        INFOPLIST_KEY_CFBundleDisplayName: "Kralın 20 Eli"

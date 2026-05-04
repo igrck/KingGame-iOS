@@ -1,71 +1,38 @@
 import Foundation
 
 // MARK: - ContractManager (Kontrat Yöneticisi)
-/// Sabit sıralı kontrat yönetimi ve koz yapılandırması
+/// Rehber modelinde: her el başında seçim sırası olan oyuncu koz/ceza seçer.
+/// Bu manager artık seçim sırası ve kontrat geçmişini takip eder.
 class ContractManager {
-    
-    /// Tüm kontratlar sabit sırayla
-    let contracts: [ContractType] = ContractType.allCases
-    
-    /// Aktif kontrat indeksi
-    private(set) var currentIndex: Int = 0
-    
+
+    /// Toplam kontrat sayısı (her oyuncu 5 haktan 4 oyuncu = 20 kontrat, ama oyun
+    /// tüm haklar tükenince biter — checkGameOver() bunu yakalar)
+    var contractHistory: [ContractType] = []
+
     /// Aktif kontrat
-    var currentContract: ContractType {
-        guard currentIndex < contracts.count else {
-            return .king // Güvenlik
-        }
-        return contracts[currentIndex]
+    var currentContract: ContractType = .elAlmaz
+
+    /// Kontrat geçmişine ekle
+    func recordContract(_ contract: ContractType) {
+        contractHistory.append(contract)
     }
-    
-    /// Tüm kontratlar tamamlandı mı?
-    var isComplete: Bool {
-        currentIndex >= contracts.count
-    }
-    
-    /// Kalan kontrat sayısı
-    var remainingContracts: Int {
-        max(0, contracts.count - currentIndex)
-    }
-    
-    /// Bir sonraki kontrata geç
-    /// - Returns: Yeni kontrat, eğer tüm kontratlar bittiyse nil
-    @discardableResult
-    func advanceToNextContract() -> ContractType? {
-        currentIndex += 1
-        guard !isComplete else { return nil }
-        return currentContract
-    }
-    
-    /// Kayıt yükleme / test: oyun kontrat indeksini ayarla (oyun bittiyse `contracts.count`).
-    func setContract(at index: Int) {
-        guard index >= 0 else { return }
-        currentIndex = min(index, contracts.count)
-    }
-    
-    /// Kontratı sıfırla
+
+    /// Toplam oynanan kontrat sayısı
+    var totalPlayed: Int { contractHistory.count }
+
+    /// Sıfırla
     func reset() {
-        currentIndex = 0
+        contractHistory = []
+        currentContract = .elAlmaz
     }
-    
-    /// Belirli kontrat için koz modu
-    func trumpMode(for contract: ContractType) -> TrumpMode {
-        // Tüm kontratlar için dağıtıcı seçer (kullanıcının tercihine göre)
-        return .dealerChooses
-    }
-    
-    /// Kontrat ilerleme yüzdesi
-    var progressPercentage: Double {
-        Double(currentIndex) / Double(contracts.count)
-    }
-    
+
     /// Kontrat özet bilgisi
     func summary() -> [ContractSummary] {
-        contracts.enumerated().map { index, contract in
+        contractHistory.enumerated().map { index, contract in
             ContractSummary(
                 contract: contract,
-                isCompleted: index < currentIndex,
-                isCurrent: index == currentIndex,
+                isCompleted: true,
+                isCurrent: index == contractHistory.count - 1,
                 order: index + 1
             )
         }

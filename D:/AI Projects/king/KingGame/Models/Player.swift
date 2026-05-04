@@ -10,6 +10,11 @@ struct Player: Identifiable, Codable {
     var isHuman: Bool
     var isDealer: Bool
     
+    /// Koz söyleme hakkı (başlangıçta 2, her koz seçiminde -1)
+    var kozHaklari: Int
+    /// Ceza söyleme hakkı (başlangıçta 3, her ceza seçiminde -1)
+    var cezaHaklari: Int
+    
     /// Oyuncunun masa pozisyonu (0: güney/insan, 1: batı, 2: kuzey, 3: doğu)
     var position: PlayerPosition
     
@@ -27,6 +32,8 @@ struct Player: Identifiable, Codable {
         self.isHuman = isHuman
         self.isDealer = isDealer
         self.position = position
+        self.kozHaklari = 2
+        self.cezaHaklari = 3
     }
     
     /// Eldeki kartları sırala (renk → değer)
@@ -54,6 +61,16 @@ struct Player: Identifiable, Codable {
         hand.contains { $0.isDiamondTwo }
     }
     
+    /// Tüm hakları tüketti mi? (zorunlu koz durumu)
+    var hasUsedAllRights: Bool {
+        kozHaklari == 0 && cezaHaklari == 0
+    }
+    
+    /// 10'dan büyük kart var mı? (Yeniden dağıtım kontrolü için)
+    var hasHighCard: Bool {
+        hand.contains { $0.rank.rawValue > 10 }
+    }
+    
     /// Elden kart çıkar
     mutating func removeCard(_ card: Card) {
         hand.removeAll { $0 == card }
@@ -64,10 +81,19 @@ struct Player: Identifiable, Codable {
         wonTricks.count
     }
     
-    /// Yeni kontrat için sıfırla
+    /// Yeni kontrat için sıfırla (koz/ceza hakları oyun genelinde korunur, sıfırlanmaz)
     mutating func resetForNewContract() {
         hand = []
         wonTricks = []
+    }
+    
+    /// Tüm oyun sıfırlandığında hakları da sıfırla
+    mutating func resetForNewGame() {
+        hand = []
+        wonTricks = []
+        kozHaklari = 2
+        cezaHaklari = 3
+        score = 0
     }
     
     /// Toplam skoru güncelle

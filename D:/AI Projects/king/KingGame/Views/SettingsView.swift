@@ -7,11 +7,23 @@ struct SettingsView: View {
     @AppStorage("soundEnabled") private var soundEnabled = true
     @AppStorage("hapticsEnabled") private var hapticsEnabled = true
     @AppStorage("trumpDeterminationMode") private var trumpMode = 0 // 0: Dealer, 1: Fixed
+    @AppStorage("appTheme") private var appTheme: Int = 0 // 0: System, 1: Light, 2: Dark
     @AppStorage("playerAvatar") private var playerAvatar = "person.fill"
     
     var body: some View {
         NavigationStack {
             Form {
+                Section {
+                    Picker("Tema", selection: $appTheme) {
+                        Text("Sistem").tag(0)
+                        Text("Aydınlık").tag(1)
+                        Text("Karanlık").tag(2)
+                    }
+                    .pickerStyle(.segmented)
+                } header: {
+                    Text("Görünüm")
+                }
+                
                 Section {
                     Toggle("Ses Efektleri", isOn: $soundEnabled)
                         .tint(.blue)
@@ -53,13 +65,13 @@ struct SettingsView: View {
                 }
                 
                 Section {
-                    Button("Hakkında", action: {
-                        // Hakkında ekranı
-                    })
+                    NavigationLink("Kurallar") {
+                        RulesView()
+                    }
                     
-                    Button("Kurallar", action: {
-                        // Kurallar ekranı
-                    })
+                    NavigationLink("Hakkında") {
+                        AboutView()
+                    }
                 }
                 
                 Section {

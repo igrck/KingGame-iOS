@@ -5,10 +5,11 @@ struct HandView: View {
     let cards: [Card]
     let trumpSuit: Suit?
     let isHumanTurn: Bool
+    let selectedCard: Card?       // ViewModel'dan gelir
+    let shakeCard: Card?          // Geçersiz kart titreşim
     let isCardPlayable: (Card) -> Bool
-    let onCardTap: (Card) -> Void
+    let onCardTap: (Card) -> Void // humanTapCard tetikler
     
-    @State private var selectedCard: Card? = nil
     @State private var appeared = false
     
     var body: some View {
@@ -37,6 +38,7 @@ struct HandView: View {
                         x: startX + CGFloat(index) * spacing - totalWidth / 2 + cardWidth / 2,
                         y: isSelected ? -20 : fanOffset(index: index, total: cards.count)
                     )
+                    .modifier(ShakeModifier(active: shakeCard == card))
                     .rotationEffect(
                         .degrees(fanRotation(index: index, total: cards.count)),
                         anchor: .bottom
@@ -44,21 +46,8 @@ struct HandView: View {
                     .zIndex(Double(index) + (isSelected ? 100 : 0))
                     .onTapGesture {
                         guard isHumanTurn else { return }
-                        if !playable { return }
-                        
-                        if isSelected {
-                            // İkinci dokunuşta oyna
-                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                selectedCard = nil
-                            }
-                            onCardTap(card)
-                        } else {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                selectedCard = card
-                            }
-                            // Haptic
-                            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        }
+                        // ViewModel'daki humanTapCard() tüm mantığı yönetir
+                        onCardTap(card)
                     }
                     .transition(.asymmetric(
                         insertion: .scale.combined(with: .opacity),
@@ -100,6 +89,22 @@ struct HandView: View {
     }
 }
 
+// MARK: - ShakeModifier (Geçersiz Kart Titremesi)
+struct ShakeModifier: ViewModifier {
+    let active: Bool
+
+    func body(content: Content) -> some View {
+        content
+            .offset(x: active ? 6 : 0)
+            .animation(
+                active
+                    ? .easeInOut(duration: 0.06).repeatCount(5, autoreverses: true)
+                    : .default,
+                value: active
+            )
+    }
+}
+
 #Preview {
     let cards = [
         Card(suit: .hearts, rank: .ace),
@@ -111,13 +116,16 @@ struct HandView: View {
         Card(suit: .spades, rank: .ten),
         Card(suit: .spades, rank: .three),
     ]
-    
+
     HandView(
         cards: cards,
         trumpSuit: .hearts,
         isHumanTurn: true,
+        selectedCard: nil,
+        shakeCard: nil,
         isCardPlayable: { _ in true },
         onCardTap: { _ in }
     )
     .background(Color(red: 0.08, green: 0.12, blue: 0.2))
 }
+

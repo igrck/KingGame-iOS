@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct MainMenuView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var showGame = false
     @State private var showSettings = false
     @State private var hasSavedGame = GameState.hasSavedGame
@@ -8,15 +9,23 @@ struct MainMenuView: View {
     @State private var animateCards = false
     @State private var continueSavedGame = false
     
+    // ViewModel sahiplikleri burada tutulur
+    @StateObject private var newGameVM = GameViewModel()
+    @StateObject private var savedGameVM = GameViewModel()
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 // Arka plan gradyan
                 LinearGradient(
-                    colors: [
+                    colors: colorScheme == .dark ? [
                         Color(red: 0.05, green: 0.08, blue: 0.15),
                         Color(red: 0.1, green: 0.15, blue: 0.25),
                         Color(red: 0.08, green: 0.1, blue: 0.2)
+                    ] : [
+                        Color(red: 0.85, green: 0.9, blue: 0.95),
+                        Color(red: 0.9, green: 0.95, blue: 1.0),
+                        Color(red: 0.8, green: 0.85, blue: 0.9)
                     ],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
@@ -42,18 +51,10 @@ struct MainMenuView: View {
                 }
             }
             .navigationDestination(isPresented: $showGame) {
-                GameBoardView(viewModel: {
-                    let vm = GameViewModel()
-                    vm.startNewGame()
-                    return vm
-                }())
+                GameBoardView(viewModel: newGameVM)
             }
             .navigationDestination(isPresented: $continueSavedGame) {
-                GameBoardView(viewModel: {
-                    let vm = GameViewModel()
-                    _ = vm.continueGame()
-                    return vm
-                }())
+                GameBoardView(viewModel: savedGameVM)
             }
             .sheet(isPresented: $showSettings) {
                 SettingsView()
@@ -72,25 +73,20 @@ struct MainMenuView: View {
     // MARK: - Başlık
     private var titleSection: some View {
         VStack(spacing: 16) {
-            // Kart ikonları
-            HStack(spacing: 8) {
-                ForEach(Suit.allCases) { suit in
-                    Text(suit.symbol)
-                        .font(.system(size: 36))
-                        .foregroundStyle(suit.isRed ? Color.red : Color.white)
-                        .opacity(animateCards ? 1 : 0)
-                        .offset(y: animateCards ? 0 : -20)
-                        .animation(
-                            .spring(response: 0.6, dampingFraction: 0.7)
-                                .delay(Double(Suit.allCases.firstIndex(of: suit) ?? 0) * 0.15),
-                            value: animateCards
-                        )
-                }
-            }
+            Image("GameLogo")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 120, height: 120)
+                .clipShape(RoundedRectangle(cornerRadius: 24))
+                .shadow(color: .black.opacity(0.3), radius: 10, y: 5)
+                .opacity(animateTitle ? 1 : 0)
+                .scaleEffect(animateTitle ? 1 : 0.7)
             
-            Text("KING")
-                .font(.system(size: 72, weight: .black, design: .serif))
+            Text("Kralın 20 Eli")
+                .font(.system(size: 46, weight: .black, design: .serif))
+                .multilineTextAlignment(.center)
                 .foregroundStyle(
+                    colorScheme == .dark ?
                     LinearGradient(
                         colors: [
                             Color(red: 0.85, green: 0.75, blue: 0.45),
@@ -99,15 +95,24 @@ struct MainMenuView: View {
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
+                    ) :
+                    LinearGradient(
+                        colors: [
+                            Color(red: 0.6, green: 0.4, blue: 0.1),
+                            Color(red: 0.8, green: 0.6, blue: 0.2),
+                            Color(red: 0.6, green: 0.4, blue: 0.1)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
                     )
                 )
-                .shadow(color: Color(red: 0.85, green: 0.75, blue: 0.45).opacity(0.5), radius: 20)
+                .shadow(color: colorScheme == .dark ? Color(red: 0.85, green: 0.75, blue: 0.45).opacity(0.5) : Color.black.opacity(0.1), radius: 20)
                 .opacity(animateTitle ? 1 : 0)
                 .scaleEffect(animateTitle ? 1 : 0.7)
             
             Text("Kart Oyunu")
                 .font(.system(size: 20, weight: .medium, design: .serif))
-                .foregroundStyle(Color.white.opacity(0.6))
+                .foregroundStyle(colorScheme == .dark ? Color.white.opacity(0.6) : Color.black.opacity(0.6))
                 .opacity(animateTitle ? 1 : 0)
         }
     }
@@ -121,6 +126,7 @@ struct MainMenuView: View {
                 icon: "play.fill",
                 gradient: [Color(red: 0.2, green: 0.6, blue: 0.4), Color(red: 0.15, green: 0.5, blue: 0.35)]
             ) {
+                newGameVM.startNewGame()
                 showGame = true
             }
             
@@ -131,6 +137,7 @@ struct MainMenuView: View {
                     icon: "arrow.counterclockwise",
                     gradient: [Color(red: 0.3, green: 0.5, blue: 0.7), Color(red: 0.2, green: 0.4, blue: 0.6)]
                 ) {
+                    _ = savedGameVM.continueGame()
                     continueSavedGame = true
                 }
             }

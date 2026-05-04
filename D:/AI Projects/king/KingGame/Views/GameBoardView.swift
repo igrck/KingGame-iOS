@@ -1,14 +1,14 @@
 import SwiftUI
 
 struct GameBoardView: View {
-    @State var viewModel: GameViewModel
+    @ObservedObject var viewModel: GameViewModel
     @Environment(\.dismiss) private var dismiss
     @Namespace private var animation
-    
+
     var body: some View {
         ZStack {
             // Arka plan masası
-            Color(red: 0.1, green: 0.35, blue: 0.2) // Koyu yeşil çuha
+            Color(red: 0.1, green: 0.35, blue: 0.2)
                 .ignoresSafeArea()
                 .overlay(
                     RadialGradient(
@@ -18,73 +18,54 @@ struct GameBoardView: View {
                         endRadius: 500
                     )
                 )
-            
+
             // Oyun Alanı
             VStack {
-                // Üst kısım: Kuzey rakip ve Skor/Koz göstergesi
-                HStack(alignment: .top) {
-                    // Skor Paneli (Sol)
-                    Button {
-                        withAnimation { viewModel.showScorePanel.toggle() }
-                    } label: {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Skor")
-                                .font(.caption)
-                                .foregroundStyle(.white.opacity(0.7))
-                            Text("\(viewModel.humanPlayer.score)")
-                                .font(.title3.bold())
-                                .foregroundStyle(.white)
-                        }
-                        .padding(10)
-                        .background(Color.black.opacity(0.3))
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                    }
-                    
+                // Üst kısım: Kuzey rakip
+                HStack {
                     Spacer()
-                    
+
                     // Kuzey Rakip
                     if let north = viewModel.playerAt(.north) {
-                        OpponentHandView(
-                            cardCount: north.hand.count,
-                            position: .north,
-                            playerName: north.name,
-                            isCurrentPlayer: viewModel.gameState.currentPlayerIndex == viewModel.playerIndexAt(.north),
-                            showDiamondBadge: north.hasDiamondTwo && viewModel.gameState.trickNumber == 0
-                        )
+                        VStack(spacing: 8) {
+                            Text(viewModel.currentContract.displayName)
+                                .font(.caption.bold())
+                                .foregroundStyle(.yellow)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 4)
+                                .background(Color.black.opacity(0.5))
+                                .clipShape(Capsule())
+                                
+                            OpponentHandView(
+                                cardCount: north.hand.count,
+                                position: .north,
+                                playerName: north.name,
+                                isCurrentPlayer: viewModel.gameState.currentPlayerIndex == viewModel.playerIndexAt(.north),
+                                showDiamondBadge: north.hasDiamondTwo && viewModel.gameState.trickCount == 0
+                            )
+                        }
                     }
-                    
+
                     Spacer()
-                    
-                    // Koz Göstergesi (Sağ)
-                    TrumpIndicatorView(
-                        trumpSuit: viewModel.trumpSuit,
-                        contractName: viewModel.currentContract.displayName
-                    )
-                    .frame(width: 50, height: 50)
                 }
-                .padding(.horizontal)
                 .padding(.top, 10)
-                
+
                 Spacer()
-                
-                // Orta kısım: Batı Rakip, Trick Area, Doğu Rakip
+
+                // Orta kısım: Batı, Trick Area, Doğu
                 HStack {
-                    // Batı Rakip
                     if let west = viewModel.playerAt(.west) {
                         OpponentHandView(
                             cardCount: west.hand.count,
                             position: .west,
                             playerName: west.name,
                             isCurrentPlayer: viewModel.gameState.currentPlayerIndex == viewModel.playerIndexAt(.west),
-                            showDiamondBadge: west.hasDiamondTwo && viewModel.gameState.trickNumber == 0
+                            showDiamondBadge: west.hasDiamondTwo && viewModel.gameState.trickCount == 0
                         )
-                        .rotationEffect(.degrees(90))
-                        .frame(width: 80) // Rotate nedeniyle width height yer değiştirir
                     }
-                    
+
                     Spacer()
-                    
-                    // Ortada Oynanan Kartlar
+
                     TrickAreaView(
                         playedCards: viewModel.currentTrick,
                         trumpSuit: viewModel.trumpSuit,
@@ -92,37 +73,47 @@ struct GameBoardView: View {
                         winnerName: viewModel.lastTrickWinnerName
                     )
                     .frame(width: 250, height: 250)
-                    
+
                     Spacer()
-                    
-                    // Doğu Rakip
+
                     if let east = viewModel.playerAt(.east) {
                         OpponentHandView(
                             cardCount: east.hand.count,
                             position: .east,
                             playerName: east.name,
                             isCurrentPlayer: viewModel.gameState.currentPlayerIndex == viewModel.playerIndexAt(.east),
-                            showDiamondBadge: east.hasDiamondTwo && viewModel.gameState.trickNumber == 0
+                            showDiamondBadge: east.hasDiamondTwo && viewModel.gameState.trickCount == 0
                         )
-                        .rotationEffect(.degrees(-90))
-                        .frame(width: 80)
                     }
                 }
                 .padding(.horizontal)
-                
+
                 Spacer()
-                
+
+                // Otomatik oynama sayacı (sadece insan sırası ve countdown aktifse)
+                if viewModel.isHumanTurn && viewModel.autoPlayCountdown > 0 {
+                    HStack {
+                        Spacer()
+                        AutoPlayTimerView(
+                            countdown: viewModel.autoPlayCountdown,
+                            totalSeconds: Int(viewModel.gameState.autoPlayTimeout)
+                        )
+                        .padding(.trailing, 16)
+                    }
+                }
+
                 // Alt kısım: Kullanıcı Eli
                 HandView(
                     cards: viewModel.humanPlayer.hand,
                     trumpSuit: viewModel.trumpSuit,
                     isHumanTurn: viewModel.isHumanTurn,
+                    selectedCard: viewModel.selectedCard,
+                    shakeCard: viewModel.shakeCard,
                     isCardPlayable: { viewModel.isCardPlayable($0) },
-                    onCardTap: { viewModel.humanPlayCard($0) }
+                    onCardTap: { viewModel.humanTapCard($0) }
                 )
                 .padding(.bottom, 20)
                 .background(
-                    // Sıra kullanıcıda ise hafif parlama
                     LinearGradient(
                         colors: [Color.yellow.opacity(viewModel.isHumanTurn ? 0.15 : 0), .clear],
                         startPoint: .bottom,
@@ -131,10 +122,10 @@ struct GameBoardView: View {
                     .allowsHitTesting(false)
                 )
             }
-            
+
             // UI Overlays
-            
-            // Mesaj (örn. "Koz: Kupa", "Geçersiz Kart")
+
+            // Mesaj
             if !viewModel.message.isEmpty {
                 Text(viewModel.message)
                     .font(.headline)
@@ -146,14 +137,18 @@ struct GameBoardView: View {
                     .animation(.easeInOut, value: viewModel.messageOpacity)
                     .offset(y: -100)
             }
-            
-            // Koz Seçici
-            if viewModel.showTrumpPicker {
-                TrumpPickerView(onSelect: { suit in
-                    viewModel.selectTrump(suit)
-                })
+
+            // Seçim Fazı: Koz/Ceza Seçim Ekranı
+            if viewModel.phase == .selection && viewModel.isHumanSelectionTurn {
+                SelectionPhaseView(
+                    player: viewModel.humanPlayer,
+                    onSelectContract: { contract in
+                        viewModel.humanSelectContract(contract)
+                    }
+                )
+                .transition(.opacity.combined(with: .scale(scale: 0.95)))
             }
-            
+
             // Skor Tablosu
             if viewModel.showScorePanel {
                 Color.black.opacity(0.5)
@@ -161,18 +156,18 @@ struct GameBoardView: View {
                     .onTapGesture {
                         withAnimation { viewModel.showScorePanel = false }
                     }
-                
+
                 ScoreView(
                     players: viewModel.players,
                     roundScores: viewModel.gameState.roundScores,
                     contractName: viewModel.currentContract.displayName,
-                    trickNumber: viewModel.gameState.trickNumber,
+                    trickNumber: viewModel.gameState.trickCount,
                     isPresented: $viewModel.showScorePanel
                 )
                 .frame(maxWidth: 400, maxHeight: 500)
                 .transition(.scale.combined(with: .opacity))
             }
-            
+
             // Kontrat Özeti
             if viewModel.showContractSummary {
                 ContractSummaryView(
@@ -181,7 +176,7 @@ struct GameBoardView: View {
                     onContinue: { viewModel.proceedAfterContractSummary() }
                 )
             }
-            
+
             // Oyun Bitti
             if viewModel.showGameOver {
                 GameOverView(
@@ -190,26 +185,49 @@ struct GameBoardView: View {
                 )
             }
         }
+        .onAppear {
+            Task { await viewModel.resumeGame() }
+        }
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    viewModel.saveGame()
-                    dismiss()
+                Menu {
+                    Section("Oyun Bilgisi") {
+                        Text("Oyun Türü: \(viewModel.currentContract.displayName)")
+                        if let suit = viewModel.trumpSuit {
+                            Text("Koz: \(suit.displayName)")
+                        }
+                    }
+                    
+                    Section("Senin Durumun") {
+                        Text("Skor: \(viewModel.humanPlayer.score)")
+                        Text("Kalan Koz Hakkı: \(viewModel.humanPlayer.kozHaklari)")
+                        Text("Kalan Ceza Hakkı: \(viewModel.humanPlayer.cezaHaklari)")
+                    }
+                    
+                    Section {
+                        Button {
+                            withAnimation { viewModel.showScorePanel.toggle() }
+                        } label: {
+                            Label("Skor Tablosunu Aç", systemImage: "list.number")
+                        }
+                        
+                        Button(role: .destructive) {
+                            viewModel.saveGame()
+                            dismiss()
+                        } label: {
+                            Label("Oyundan Çık", systemImage: "rectangle.portrait.and.arrow.right")
+                        }
+                    }
                 } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.white.opacity(0.8))
-                        .font(.title3)
+                    Image(systemName: "line.3.horizontal")
+                        .font(.title2)
+                        .foregroundStyle(.white.opacity(0.9))
+                        .padding(10)
+                        .background(Color.black.opacity(0.4))
+                        .clipShape(Circle())
                 }
-            }
-        }
-        .onAppear {
-            if viewModel.gameState.phase == .dealing {
-                // MainMenu'den startNewGame çağrılmış olabilir,
-                // Ama ilk açılışta animasyonları ve AI döngüsünü tetiklemek için startNewContract gerekirse.
-                // startNewGame zaten viewModel oluşturulurken çağrılıyor (MainMenu içinde)
             }
         }
     }
 }
-

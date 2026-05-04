@@ -31,7 +31,7 @@ struct OpponentHandView: View {
                     isFaceUp: false,
                     size: .small
                 )
-                .rotationEffect(.degrees(position == .west || position == .east ? 90 : 0))
+                .rotationEffect(.degrees(position == .west ? 90 : (position == .east ? -90 : 0)))
                 .offset(x: offset.x, y: offset.y)
                 .zIndex(Double(index))
             }
@@ -55,6 +55,8 @@ struct OpponentHandView: View {
             
             Text(playerName)
                 .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .lineLimit(1)
+                .fixedSize(horizontal: true, vertical: false)
                 .foregroundStyle(isCurrentPlayer ? Color.white : Color.white.opacity(0.6))
             
             // Karo 2 rozeti
@@ -68,10 +70,6 @@ struct OpponentHandView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 4))
             }
             
-            // Kart sayısı
-            Text("(\(cardCount))")
-                .font(.system(size: 11))
-                .foregroundStyle(Color.white.opacity(0.4))
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 4)

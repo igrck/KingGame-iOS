@@ -30,6 +30,13 @@
     "swift-dependencies": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/GameEngine.swiftdeps",
     "diagnostics": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/GameEngine.dia"
   },
+  "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/PenaltyEnforcer.swift": {
+    "dependencies": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/PenaltyEnforcer.d",
+    "object": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/PenaltyEnforcer.swift.o",
+    "swiftmodule": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/PenaltyEnforcer~partial.swiftmodule",
+    "swift-dependencies": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/PenaltyEnforcer.swiftdeps",
+    "diagnostics": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/PenaltyEnforcer.dia"
+  },
   "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Engine/ScoreCalculator.swift": {
     "dependencies": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ScoreCalculator.d",
     "object": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ScoreCalculator.swift.o",
@@ -86,6 +93,13 @@
     "swift-dependencies": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/GameViewModel.swiftdeps",
     "diagnostics": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/GameViewModel.dia"
   },
+  "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/AutoPlayTimerView.swift": {
+    "dependencies": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/AutoPlayTimerView.d",
+    "object": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/AutoPlayTimerView.swift.o",
+    "swiftmodule": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/AutoPlayTimerView~partial.swiftmodule",
+    "swift-dependencies": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/AutoPlayTimerView.swiftdeps",
+    "diagnostics": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/AutoPlayTimerView.dia"
+  },
   "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/CardView.swift": {
     "dependencies": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/CardView.d",
     "object": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/CardView.swift.o",
@@ -141,6 +155,13 @@
     "swiftmodule": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ScoreView~partial.swiftmodule",
     "swift-dependencies": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ScoreView.swiftdeps",
     "diagnostics": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/ScoreView.dia"
+  },
+  "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/SelectionPhaseView.swift": {
+    "dependencies": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/SelectionPhaseView.d",
+    "object": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/SelectionPhaseView.swift.o",
+    "swiftmodule": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/SelectionPhaseView~partial.swiftmodule",
+    "swift-dependencies": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/SelectionPhaseView.swiftdeps",
+    "diagnostics": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/SelectionPhaseView.dia"
   },
   "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/Views/SettingsView.swift": {
     "dependencies": "/Users/fatmagurocak/Documents/APPs/KingGame-iOS/D:/AI Projects/king/KingGame/.build/arm64-apple-macosx/debug/KingGame.build/SettingsView.d",

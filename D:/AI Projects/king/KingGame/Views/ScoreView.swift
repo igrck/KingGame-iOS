@@ -42,10 +42,14 @@ struct ScoreView: View {
                 HStack {
                     Text("Oyuncu")
                         .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("Koz")
+                        .frame(width: 32)
+                    Text("Ceza")
+                        .frame(width: 36)
                     Text("Tur")
-                        .frame(width: 60)
+                        .frame(width: 50)
                     Text("Toplam")
-                        .frame(width: 70)
+                        .frame(width: 60)
                 }
                 .font(.system(size: 12, weight: .semibold))
                 .foregroundStyle(.white.opacity(0.4))
@@ -74,19 +78,31 @@ struct ScoreView: View {
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        
+
+                        // Koz hakkı
+                        Text("♠\(player.kozHaklari)")
+                            .font(.system(size: 12, weight: .semibold, design: .monospaced))
+                            .foregroundStyle(player.kozHaklari > 0 ? .yellow : .gray)
+                            .frame(width: 32)
+
+                        // Ceza hakkı
+                        Text("⚡\(player.cezaHaklari)")
+                            .font(.system(size: 12, weight: .semibold, design: .monospaced))
+                            .foregroundStyle(player.cezaHaklari > 0 ? .orange : .gray)
+                            .frame(width: 36)
+
                         // Tur puanı
                         let roundScore = roundScores[player.id] ?? 0
                         Text(scoreText(roundScore))
                             .font(.system(size: 14, weight: .semibold, design: .monospaced))
                             .foregroundStyle(scoreColor(roundScore))
-                            .frame(width: 60)
-                        
+                            .frame(width: 50)
+
                         // Toplam puan
                         Text(scoreText(player.score))
                             .font(.system(size: 14, weight: .bold, design: .monospaced))
                             .foregroundStyle(scoreColor(player.score))
-                            .frame(width: 70)
+                            .frame(width: 60)
                     }
                     .padding(.horizontal, 18)
                     .padding(.vertical, 10)
